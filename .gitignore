@@ -1,0 +1,34 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# dotenv files
+*.env
+
+# Logs
+logs/
+*.log
+debug.log
+
+# Vite build
+frontend-admin/dist/
+frontend-admin/.vite/
+
+# Express build (if using)
+backend/dist/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Environment folders (optional)
+.env
+.env.* 
+
+backend/src/config/serviceAccountKey.json

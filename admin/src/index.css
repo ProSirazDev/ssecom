@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* Add borders around each cell */
+
+/* Optional: Add border around each row */
+
+
+.ag-theme-quartz .ag-header-cell {
+    border: 1px solid #ececec;  /* Optional: Border for header */
+    display: flex;            /* Enable flexbox on header cell */
+    justify-content: center;  /* Horizontally center the content */
+    align-items: center;      /* Vertically center the content */
+    text-align: center;       /* Ensure text is horizontally centered */
+  }
+   .ag-theme-quartz .ag-header-cell-label {
+    width: 100%;             /* Ensure the label takes up the full width */
+    display: flex;           /* Make the label a flex container */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; 
+    border: none !important;    /* Center text vertically */
+  }
+
+  .ag-theme-quartz .ag-cell {
+    border: 1px solid #e2e2e2;
+    display: flex;
+    align-items: center; 
+    justify-content: center;/* Change the border color and width */
+  }
+   .ag-row {
+    background-color: rgba(163, 203, 248, 0.1); /* Light background color for rows */
+  }
+/* Remove all borders and pseudo-elements from header cells */
+.ag-theme-quartz .ag-header-cell,
+.ag-theme-quartz .ag-header-cell::before,
+.ag-theme-quartz .ag-header-cell::after,
+.ag-theme-quartz .ag-header-cell-resize,
+.ag-theme-quartz .ag-header-row {
+  
+  box-shadow: none !important;
+  background-image: none !important;
+  outline: none !important;
+}
+
+/* Optional: Remove border from the entire header row */
+
+/* Ensure label inside header is centered */
+.ag-theme-quartz .ag-header-cell-label {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+/* global classes */
+
+.global-drawer-button {
+  @apply bg-amber-600 px-4 mr-2 text-white py-1 inline-flex items-center gap-x-2 shadow-md
+}
+
+.global-export-btn {
+  @apply bg-blue-500 text-white px-3 py-1  cursor-pointer 
+}
+
+.global-submit-btn {
+  @apply bg-green-500 text-white px-5 py-2  cursor-pointer rounded-full
+}

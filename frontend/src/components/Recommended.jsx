@@ -41,7 +41,7 @@ const Recommended = () => {
       <img
         src={product.unit_image || 'https://via.placeholder.com/200x300'}
         alt={product.product_name}
-        className="w-full h-60 object-cover transition-transform duration-500 group-hover:scale-105"
+        className="w-full h-42 object-cover transition-transform duration-500 group-hover:scale-105"
       />
 
       <div className="p-4 bg-white space-y-2">

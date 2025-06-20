@@ -4,6 +4,7 @@ import { AuthContext } from '../globalstate/authcontext';
 import Ratings from '../components/Ratings';
 import { FaBackspace, FaExchangeAlt, FaStar } from 'react-icons/fa';
 import Ordertimeline from '../components/Ordertimeline';
+import Loader from '../components/Loader';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -42,13 +43,13 @@ const Orders = () => {
   };
 
   return (
-    <div className="min-h-screen max-w-5xl mx-auto bg-gray-50 py-6 px-4 md:px-8">
+    <div className=" w-full mx-auto bg-gray-50 py-6 px-4 md:px-8">
       <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">
         🧾 Your Orders
       </h2>
 
       {loading ? (
-        <div className="text-center text-gray-500 text-lg py-10">Loading orders...</div>
+        <div className="flex  justify-center py-10 w-full mx-auto h-screen"><Loader/></div>
       ) : orders.length === 0 ? (
         <div className="text-center text-gray-500 text-lg py-10">You have no orders.</div>
       ) : (
@@ -66,7 +67,7 @@ const Orders = () => {
                   Date: {new Date(order.cdate).toLocaleString()}
                 </p>
               </div>
-              <div className="flex gap-4 items-center justify-center border-b border-gray-300 pb-3">
+              <div className="grid grid-cols-3 gap-4 items-center justify-center  pb-2">
               <div className='flex gap-4 items-start '>    <img
                   src={order.unit_image}
                   alt={order.product_name}
@@ -82,20 +83,35 @@ const Orders = () => {
                     Total: ₹{(order.quantity * order.unit_price).toFixed(2)}
                   </p>
                 </div></div>
+            <div className='flex flex-col  mb-12'>
+            <p className='text-sm font-medium text-gray-800 mb-1'>Delivery To</p>
+            <p className='text-xs font-medium text-gray-800'>Kolkata</p>
             
+            </div>
                  <div className='flex justify-end w-full items-center  h-full'><Ordertimeline currentStatus={order.order_status } /></div>
               </div>
              
 
-              <div className='flex w-full justify-between'>
-              <button className='mt-3  bg-red-500 text-white px-3 py-1 items-center gap-2 flex hover:bg-teal-700 text-sm'><span> <FaBackspace/> </span>Return</button>
-               
-              <button
+              <div className='flex w-full justify-end gap-3'>
+             {order.order_status === 'Delivered' && (
+             <>
+               <button className='mt-3  bg-red-500 text-white px-3 py-2 rounded-full items-center gap-2 flex hover:bg-teal-700 text-sm'><span> <FaBackspace/> </span>Return</button>
+                  <button
                 onClick={() => openRatingsModal(order.id)}
-                className="mt-3  bg-teal-600 text-white px-3 py-1 items-center gap-2 flex hover:bg-teal-700 text-sm "
+                className="mt-3  bg-teal-600 text-white rounded-full px-3 py-2 items-center gap-2 flex hover:bg-teal-700 text-sm "
               >
-                <span> <FaStar/> </span> Review Product
-              </button></div>
+                <span> <FaStar/> </span> Review 
+              </button></>
+             )}
+
+                    {order.order_status != 'Delivered' && (
+
+               <button className='mt-3  bg-yellow-500 text-white px-3 py-2 items-center gap-2 rounded-full flex hover:bg-teal-700 text-sm'><span> <FaBackspace/> </span>Cancel</button>
+             )}
+               
+           
+            
+              </div>
             </div>
           ))}
         </div>

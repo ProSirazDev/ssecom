@@ -142,7 +142,7 @@ const Products = () => {
         </div>
 
         {/* Pagination Controls */}
-        {totalPages > 1 && (
+        { totalPages >= 2 && (
           <div className="flex justify-center mt-8">
             <div className="inline-flex items-center gap-1">
               <button

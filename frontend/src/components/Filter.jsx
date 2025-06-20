@@ -1,9 +1,11 @@
 import React from 'react';
 import useCategories from '../customhooks/categories';
+import useBrands from '../customhooks/brands';
 
 const Filter = ({ filters, setFilters }) => {
 
 const {categories} =useCategories()
+const {brands} =useBrands()
 
   const handleCheckboxChange = (section, value) => {
     setFilters(prev => {
@@ -30,28 +32,28 @@ const {categories} =useCategories()
 
       <div className="mb-4">
         <h3 className="font-medium mb-2">Category</h3>
-        {['Electronics', 'Clothing', 'Home & Garden'].map(cat => (
-          <label key={cat} className="block text-sm text-gray-700">
+        {categories.map(cat => (
+          <label key={cat.id} className="block text-sm text-gray-700">
             <input
               type="checkbox"
-              checked={filters.category.includes(cat)}
-              onChange={() => handleCheckboxChange('category', cat)}
+              checked={filters.category.includes(cat.id)}
+              onChange={() => handleCheckboxChange('category', cat.id)}
             />{' '}
-            {cat}
+            {cat.category_name}
           </label>
         ))}
       </div>
 
       <div className="mb-4">
         <h3 className="font-medium mb-2">Brand</h3>
-        {['Nike', 'Samsung', 'LG'].map(brand => (
-          <label key={brand} className="block text-sm text-gray-700">
+        {brands.map(brand => (
+          <label key={brand.id} className="block text-sm text-gray-700">
             <input
               type="checkbox"
-              checked={filters.brand.includes(brand)}
-              onChange={() => handleCheckboxChange('brand', brand)}
+              checked={filters.brand.includes(brand.id)}
+              onChange={() => handleCheckboxChange('brand', brand.id)}
             />{' '}
-            {brand}
+            {brand.brand_name}
           </label>
         ))}
       </div>

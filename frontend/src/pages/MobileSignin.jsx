@@ -68,6 +68,7 @@ const MobileSignin = () => {
       <div className="flex  flex-col justify-center p-3">
       
         <h2 className="text-xl font-medium mb-4 text-orange-500">Login Or Signup</h2>
+        <p className="text-sm font-medium mb-4 text-orange-800">Demo Mobile : 9876543210 OTP : 123456</p>
         <input
           type="tel"
           placeholder="9xxxxxxxxx"

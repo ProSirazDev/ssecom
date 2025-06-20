@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Loader from './Loader';
 
 const Brands = () => {
   const [brands, setBrands] = useState([]);
@@ -44,7 +45,7 @@ const Brands = () => {
         {/* Right Brand List */}
         <div className="md:col-span-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {loading ? (
-            <p className="col-span-full text-center text-gray-600">Loading...</p>
+            <div className="flex  justify-center py-10 w-full mx-auto h-screen"><Loader/></div>
           ) : error ? (
             <p className="col-span-full text-center text-red-600">Error: {error}</p>
           ) : (

@@ -8,7 +8,10 @@ export const placeOrder = async (req, res) => {
       customer_id,
       payment_method,
       payment_status,
+      order_status = 'Pending', // Default order status
       shipping_address,
+      address_id,
+      
 
       cartItems,
     } = req.body;
@@ -31,9 +34,9 @@ export const placeOrder = async (req, res) => {
     await client.query('BEGIN');
 
     await client.query(
-      `INSERT INTO orders (id, customer_id, total_amount, payment_method, payment_status, shipping_address,order_id)
-       VALUES ($1, $2, $3, $4, $5, $6,$7)`,
-      [orderId, customer_id, total_amount, payment_method, payment_status, shipping_address,order_id]
+      `INSERT INTO orders (id, customer_id, total_amount, payment_method, payment_status,order_status, shipping_address,address_id,order_id)
+       VALUES ($1, $2, $3, $4, $5, $6,$7,$8,$9)`,
+      [orderId, customer_id, total_amount, payment_method, payment_status,order_status, shipping_address,address_id,order_id]
     );
 
     for (const item of cartItems) {

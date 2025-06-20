@@ -1,58 +1,60 @@
 import React from 'react';
 import { FiFacebook, FiInstagram, FiTwitter } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+  // window.scrollTo({ top: 0, behavior: 'smooth' });
   return (
-    <footer className="bg-[#232F3E] shadow-inner mt-12  ">
+    <footer className="bg-[#232F3E] shadow-inner mt-12">
       <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm text-white">
 
         {/* Company Info */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-800 mb-2">ShopEase</h2>
-          <p className="mb-4">Your one-stop shop for everything awesome.</p>
-          <div className="flex space-x-4 text-indigo-600 text-lg">
-            <FiFacebook className="hover:text-indigo-800 cursor-pointer" />
-            <FiInstagram className="hover:text-indigo-800 cursor-pointer" />
-            <FiTwitter className="hover:text-indigo-800 cursor-pointer" />
+          <h2 className="text-lg font-semibold mb-2 text-white">ShopEase</h2>
+          <p className="mb-4 text-gray-300">Your one-stop shop for everything awesome.</p>
+          <div className="flex space-x-4 text-indigo-500 text-lg">
+            <FiFacebook className="hover:text-indigo-300 cursor-pointer" />
+            <FiInstagram className="hover:text-indigo-300 cursor-pointer" />
+            <FiTwitter className="hover:text-indigo-300 cursor-pointer" />
           </div>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-gray-800 font-semibold mb-2">Quick Links</h3>
+          <h3 className="font-semibold mb-2 text-white">Quick Links</h3>
           <ul className="space-y-2">
-            <li><a href="/" className="hover:text-indigo-600">Home</a></li>
-            <li><a href="/shop" className="hover:text-indigo-600">Shop</a></li>
-            <li><a href="/cart" className="hover:text-indigo-600">Cart</a></li>
-            <li><a href="/contact" className="hover:text-indigo-600">Contact</a></li>
+            <li><Link to="/" className="hover:text-indigo-400">Home</Link></li>
+            <li><Link to="/shop" className="hover:text-indigo-400">Shop</Link></li>
+            <li><Link to="/cart" className="hover:text-indigo-400">Cart</Link></li>
+            <li><Link to="/contact" className="hover:text-indigo-400">Contact</Link></li>
           </ul>
         </div>
 
         {/* Categories */}
         <div>
-          <h3 className="text-gray-800 font-semibold mb-2">Categories</h3>
+          <h3 className="font-semibold mb-2 text-white">Categories</h3>
           <ul className="space-y-2">
-            <li><a href="/category/electronics" className="hover:text-indigo-600">Electronics</a></li>
-            <li><a href="/category/fashion" className="hover:text-indigo-600">Fashion</a></li>
-            <li><a href="/category/home" className="hover:text-indigo-600">Home & Garden</a></li>
-            <li><a href="/category/beauty" className="hover:text-indigo-600">Beauty</a></li>
+            <li><Link to="/category/electronics" className="hover:text-indigo-400">Electronics</Link></li>
+            <li><Link to="/category/fashion" className="hover:text-indigo-400">Fashion</Link></li>
+            <li><Link to="/category/home" className="hover:text-indigo-400">Home & Garden</Link></li>
+            <li><Link to="/category/beauty" className="hover:text-indigo-400">Beauty</Link></li>
           </ul>
         </div>
 
-        {/* Help */}
+        {/* Support */}
         <div>
-          <h3 className="text-gray-800 font-semibold mb-2">Support</h3>
+          <h3 className="font-semibold mb-2 text-white">Support</h3>
           <ul className="space-y-2">
-            <li><a href="/faq" className="hover:text-indigo-600">FAQ</a></li>
-            <li><a href="/terms" className="hover:text-indigo-600">Terms & Conditions</a></li>
-            <li><a href="/privacy" className="hover:text-indigo-600">Privacy Policy</a></li>
-            <li><a href="/returns" className="hover:text-indigo-600">Return Policy</a></li>
+            <li><Link to="/faq" className="hover:text-indigo-400">FAQ</Link></li>
+            <li><Link to="/terms" className="hover:text-indigo-400">Terms & Conditions</Link></li>
+            <li><Link to="/privacy" className="hover:text-indigo-400">Privacy Policy</Link></li>
+            <li><Link to="/returns" className="hover:text-indigo-400">Return Policy</Link></li>
           </ul>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="text-center border-t border-gray-300 py-4 text-white text-xs bg-black/10">
+      <div className="text-center border-t border-gray-500 py-4 text-white text-xs bg-black/10">
         © {new Date().getFullYear()} ShopEase. All rights reserved.
       </div>
     </footer>

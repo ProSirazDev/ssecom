@@ -14,7 +14,7 @@ const Ratings = ({ productId }) => {
 const {user}= useContext(AuthContext); // Assuming you have an AuthContext to get user info
   // Fetch reviews and rating on mount
   useEffect(() => {
-    fetchReviews();
+    // fetchReviews();
     fetchRatingSummary();
   }, [productId]);
 
@@ -77,7 +77,7 @@ const {user}= useContext(AuthContext); // Assuming you have an AuthContext to ge
             <Star key={i} filled={i <= Math.round(averageRating)} />
           ))}
         </div>
-        <span className="ml-2 text-sm text-gray-500">({reviews.length} reviews)</span>
+        {/* <span className="ml-2 text-sm text-gray-500">({reviews.length} reviews)</span> */}
       </div>
 
     {user && (  <form onSubmit={handleSubmit} className="mb-6 space-y-4">
@@ -117,7 +117,7 @@ const {user}= useContext(AuthContext); // Assuming you have an AuthContext to ge
         </button>
       </form>)}
 
-      <div className="space-y-4">
+      {/* <div className="space-y-4">
         {reviews.map((review, index) => (
           <div key={index} className="border-b pb-4">
             <div className="flex items-center mb-1">
@@ -131,7 +131,7 @@ const {user}= useContext(AuthContext); // Assuming you have an AuthContext to ge
             <p className="text-gray-700">{review.comment}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };

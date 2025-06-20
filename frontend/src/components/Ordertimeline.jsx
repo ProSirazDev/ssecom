@@ -7,7 +7,7 @@ import clsx from 'clsx';
 // Custom Connector Line
 const ColorConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
-    top: 10,
+    top: 6,
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
@@ -33,7 +33,7 @@ const CustomStepIcon = (props) => {
 
   return (
     <div
-      className={clsx(className, 'flex items-center justify-center rounded-full w-5 h-5 text-white', {
+      className={clsx(className, 'flex items-center justify-center rounded-full w-3 h-3 text-white', {
         'bg-green-500': completed || active,
         'bg-gray-400': !completed && !active,
       })}

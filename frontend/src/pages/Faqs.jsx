@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { handleDetectAddress } from '../utils';
+import UserPincode from './UserPincode';
 
 const faqData = [
   {
@@ -55,6 +57,10 @@ const Faqs = () => {
           </div>
         ))}
       </div>
+
+
+<UserPincode />
+
     </div>
   );
 };

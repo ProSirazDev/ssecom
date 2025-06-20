@@ -51,12 +51,12 @@ const ImageSlider = () => {
             <img
               src={item.src}
               alt={`Slide ${index + 1}`}
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full bg-cover bg-center "
             />
 
             {/* Overlay Text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 text-white text-center px-4">
-              <h2 className="text-2xl md:text-6xl font-medium mb-4 font-serif">{item.title}</h2>
+              <h2 className="text-xl md:text-3xl font-medium mb-4 text-orange-500  ">{item.title}</h2>
               <Link
                 to={item.link}
                 className="bg-white text-black px-6 py-2  hover:bg-gray-200 transition"

@@ -25,6 +25,9 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import Checkout from "./pages/Checkout";
 import ThankYou from "./pages/ThankYou";
+import MyProfile from "./pages/MyProfile";
+import DeliveryAddress from "./pages/DeliveryAddress";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
@@ -41,6 +44,7 @@ function App() {
         pauseOnHover
         theme="light"
       />
+         <ScrollToTop />
       <Routes>
         {/* All pages under MainLayout */}
         <Route path="/" element={<MainLayout />}>
@@ -49,10 +53,10 @@ function App() {
           <Route path="/products/:id" element={<Products />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<CustomerSignup />} />
-            <Route path="signin" element={<MobileSignin />} />
-            <Route path="edit-profile" element={<EditProfile />} />
-             <Route path="otp-verify" element={<OtpVerify/>} />
-              <Route path="sign-out" element={<Logout/>} />
+          <Route path="signin" element={<MobileSignin />} />
+          <Route path="edit-profile" element={<EditProfile />} />
+          <Route path="otp-verify" element={<OtpVerify />} />
+          <Route path="sign-out" element={<Logout />} />
           <Route path="cart" element={<Cart />} />
           <Route
             path="productdetails/:productId"
@@ -60,15 +64,19 @@ function App() {
           />
           <Route path="becomeseller" element={<BecomeSeller />} />
           <Route path="payments" element={<Payment />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="address" element={<Address />} />
+          
+          
           <Route path="profile" element={<Profile />} />
-           <Route path="terms" element={<TermsConditions />} />
-            <Route path="faq" element={<Faqs />} />
-             <Route path="privacy" element={<PrivacyPolicy />} />
-              <Route path="returns" element={<ReturnPolicy />} />
-                <Route path="checkout" element={<Checkout />} />
-                  <Route path="thankyou" element={<ThankYou />} />
+          <Route path="terms" element={<TermsConditions />} />
+          <Route path="faq" element={<Faqs />} />
+          <Route path="privacy" element={<PrivacyPolicy />} />
+          <Route path="returns" element={<ReturnPolicy />} />
+          <Route path="checkout" element={<Checkout />} />
+            <Route path="delivery-address" element={<DeliveryAddress />} />
+          <Route path="address/:userId" element={<Address/>} />
+          <Route path="thankyou" element={<ThankYou />} />
+            <Route path="my-profile" element={<MyProfile />} >
+            <Route path="orders" element={<Orders />} /></Route>
 
           <Route path="*" element={<Notfound />} />
         </Route>

@@ -30,50 +30,19 @@ const Cart = () => {
     0
   );
 
-  const handleOrder = async () => {
-    if (cartItems.length === 0) {
-      navigate("/");
-      return;
-    } else if (!user) {
-      toast.warning("Please login to proceed to checkout.");
-      navigate("/signin");
-      return;
-    }
+ const handleLoginCheck = async () => {
+  if (cartItems.length === 0) {
+    navigate("/");
+    return;
+  }
 
-    try {
-      const payload = {
-        customer_id:  user.id, // adapt according to your user object
-        payment_method: "cash",
-        payment_status: "unpaid",
-        shipping_address: "123 Main St, Your City, Country", // ideally from user profile
-        cartItems: cartItems.map(({ id, quantity, price, product_name }) => ({
-          product_id: id,
-          quantity,
-          price,
-          product_name,
-        })),
-      };
-
-      // If you set up axios to include fresh tokens via interceptors, no need to add headers here
-      const response = await axios.post("/api/orders", payload, {
-        withCredentials: true,
-      });
-
-      if (response.status === 201) {
-        // toast.success("Order placed successfully!");
-        clearCart();
-       navigate("/checkout", {
-  state: { amount: (total + 5) * 100 },
-});
-
-      } else {
-        toast.error("Failed to place order.");
-      }
-    } catch (error) {
-      console.error("Order error:", error);
-      toast.error("Error placing order.");
-    }
-  };
+  if (!user) {
+    toast.warning("Please login to proceed to checkout.");
+    navigate("/signin");
+  } else {
+    navigate('/delivery-address');
+  }
+};
 
   return (
     <div className="min-h-screen max-w-7xl mx-auto  bg-gray-50 py-8 px-4 lg:px-6">
@@ -172,12 +141,12 @@ const Cart = () => {
                 <span>Total</span>
                 <span>&#x20B9; {(total + 5).toFixed(2)}</span>
               </div>
-              <button
-                onClick={handleOrder}
-                className="mt-6 w-full bg-teal-600 hover:bg-indigo-700 text-white py-2 rounded transition shadow-sm"
+            <div className="mt-5 flex w-full justify-end">  <button 
+                onClick={handleLoginCheck}
+                className="  px-5 bg-teal-500 hover:bg-teal-600 text-white py-2  transition shadow-sm"
               >
-                Proceed to Checkout
-              </button>
+               Continue
+              </button></div>
             </div>
           )}
         </div>

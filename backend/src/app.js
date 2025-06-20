@@ -12,6 +12,10 @@ import authRoutes from '../src/routes/auth.routes.js'
 import reviewsRoutes from '../src/routes/reviews.routes.js';
 import paymentRoutes from '../src/routes/payment.routes.js'; // ✅ FIXED: added 'payment.routes' import
 import cookieParser from 'cookie-parser'; // ✅ FIXED: added 'cookie-parser' import
+import addressRoutes from '../src/routes/address.routes.js'; // ✅ FIXED: added 'address.routes' import
+import metricsRoute from './routes/metrics.route.js';
+import { httpRequestCounter } from './metrics/metrics.js';
+
 const app = express();
 
 
@@ -22,6 +26,17 @@ app.use(cors({
 app.use(cookieParser()); 
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    httpRequestCounter.inc({
+      method: req.method,
+      route: req.route?.path || req.path,
+      status: res.statusCode,
+    });
+  });
+  next();
+});
 
 app.use('/api/products', productRoutes);
 app.use("/api/brands", brandRoutes);
@@ -34,5 +49,8 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/reviews", reviewsRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/address', addressRoutes);
+app.use('/metrics', metricsRoute);
+
 
 export default app;

@@ -57,7 +57,7 @@ const Faqs = () => {
           </div>
         ))}
       </div>
-
+{/* change */}
 
 <UserPincode />
 

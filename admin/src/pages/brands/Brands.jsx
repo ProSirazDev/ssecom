@@ -2,7 +2,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import DrawerButton from "../../components/ui/DrawerButton";
-import Header from "../../components/ui/header";
+import Header from "../../components/ui/Header";
 import AddBrands from "./AddBrands";
 import handleExportCsv from "../../utils/CommonFunctions";
 import { Download } from "lucide-react";

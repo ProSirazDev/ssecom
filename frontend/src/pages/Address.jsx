@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import axios from '../utils/axiosInstance';
 import { AuthContext } from '../globalstate/authcontext';
 
 const Address = () => {
@@ -7,21 +8,19 @@ const Address = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchAddresses = async () => {
+      try {
+        const res = await axios.get(`/api/address/${user.id}`);
+        setAddresses(res.data);
+      } catch (error) {
+        console.error('Error fetching addresses:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     if (user?.id) {
-      fetch(`/api/address/${user.id}`)
-        .then(res => {
-          if (!res.ok) throw new Error('Failed to fetch addresses');
-          return res.json();
-        })
-        .then(data => {
-          setAddresses(data);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      fetchAddresses();
     }
   }, [user]);
 

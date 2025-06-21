@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from '../utils/axiosInstance';
+
 
 const CustomerSignup = () => {
   const [formData, setFormData] = useState({
@@ -22,37 +24,33 @@ const CustomerSignup = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
 
-      const data = await res.json();
 
-      if (res.ok) {
-        toast.success('🎉 User registered successfully!', { position: 'top-center' });
-        setFormData({
-          first_name: '',
-          middle_name: '',
-          last_name: '',
-          mobile: '',
-          email: '',
-          password: '',
-          role_id: '2aa6bcd9-597e-4563-ac01-4f7048cb8f10',
-          cby: 'Seeder',
-        });
-      } else {
-        toast.error(data.message || '❌ Registration failed', { position: 'top-center' });
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error('🚨 An unexpected error occurred', { position: 'top-center' });
-    }
-  };
+// inside your component
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await axios.post('/api/auth/register', formData);
+
+    toast.success('🎉 User registered successfully!', { position: 'top-center' });
+
+    setFormData({
+      first_name: '',
+      middle_name: '',
+      last_name: '',
+      mobile: '',
+      email: '',
+      password: '',
+      role_id: '2aa6bcd9-597e-4563-ac01-4f7048cb8f10',
+      cby: 'Seeder',
+    });
+  } catch (err) {
+    console.error(err);
+    const message = err.response?.data?.message || '❌ Registration failed';
+    toast.error(message, { position: 'top-center' });
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">

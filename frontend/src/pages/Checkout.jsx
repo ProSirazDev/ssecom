@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import {  useLocation, useNavigate } from 'react-router-dom';
 
 const Checkout = () => {

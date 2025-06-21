@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axios from '../utils/axiosInstance';
 import { useCart } from "../globalstate/cartcontext";
 import Ratings from "../components/Ratings";
 import { FaExchangeAlt } from "react-icons/fa";

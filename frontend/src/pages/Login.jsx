@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiMail, FiLock } from 'react-icons/fi';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useAuth} from '../globalstate/authcontext.jsx'

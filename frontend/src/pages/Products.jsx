@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Filter from '../components/Filter';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import { useSearch } from '../globalstate/searchcontext';
 
 const Products = () => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 import { AuthContext } from '../globalstate/authcontext';
 import Ratings from '../components/Ratings';
 import { FaBackspace, FaExchangeAlt, FaStar } from 'react-icons/fa';

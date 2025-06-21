@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../globalstate/authcontext';
+import axios from '../utils/axiosInstance';
 
 const OtpVerify = () => {
   const [otp, setOtp] = useState(Array(6).fill(''));
@@ -37,50 +38,42 @@ const OtpVerify = () => {
     }
   };
 
-  const handleVerifyOtp = async () => {
-    const fullOtp = otp.join('');
 
-    if (!/^\d{6}$/.test(fullOtp)) {
-      setMessage('Please enter a valid 6-digit OTP');
-      return;
-    }
 
-    if (!confirmationResult) {
-      setMessage('OTP session expired. Please request again.');
-      return;
-    }
+// inside your component
+const handleVerifyOtp = async () => {
+  const fullOtp = otp.join('');
 
-    setLoading(true);
-    try {
-      const result = await confirmationResult.confirm(fullOtp);
-      const token = await result.user.getIdToken();
+  if (!/^\d{6}$/.test(fullOtp)) {
+    setMessage('Please enter a valid 6-digit OTP');
+    return;
+  }
 
-      const response = await fetch('http://localhost:5000/api/auth/firebase-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
-        credentials: 'include',
-      });
+  if (!confirmationResult) {
+    setMessage('OTP session expired. Please request again.');
+    return;
+  }
 
-      const data = await response.json();
+  setLoading(true);
+  try {
+    const result = await confirmationResult.confirm(fullOtp);
+    const token = await result.user.getIdToken();
 
-      if (response.ok) {
-        // setUser(data);
-        setMessage('Phone verified. Logging in...');
-        setTimeout(() => {
-         
-          navigate('/dashboard');
-        }, 1000);
-      } else {
-        throw new Error(data.error || 'Server error');
-      }
-    } catch (err) {
-      console.error('OTP verification failed:', err);
-      setMessage('Invalid OTP or login failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const res = await axios.post('/api/auth/firebase-login', { token }, { withCredentials: true });
+
+    // setUser(res.data); // Uncomment if you're saving user data in state or context
+    setMessage('Phone verified. Logging in...');
+    setTimeout(() => {
+      navigate('/dashboard');
+    }, 1000);
+  } catch (err) {
+    console.error('OTP verification failed:', err);
+    setMessage('Invalid OTP or login failed.');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleResendOtp = async () => {
     const mobile = sessionStorage.getItem('mobile');

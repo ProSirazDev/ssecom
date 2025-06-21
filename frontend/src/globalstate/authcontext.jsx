@@ -40,7 +40,7 @@
 // };
 // src/globalstate/authcontext.js
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../utils/axiosInstance';
 
 export const AuthContext = createContext();
 

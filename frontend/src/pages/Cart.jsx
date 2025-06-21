@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import axios from "axios";
+
 import { toast } from "react-toastify";
 import { useCart } from "../globalstate/cartcontext";
-import Recommended from "../components/Recommended";
+// import Recommended from "../components/Recommended";
 import { useNavigate, Link } from "react-router-dom";
 
 import { AuthContext } from "../globalstate/authcontext"; // import your AuthContext

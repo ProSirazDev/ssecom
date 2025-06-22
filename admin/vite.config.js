@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(({ mode }) => ({
+  base: './',
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
@@ -16,8 +17,13 @@ export default defineConfig(({ mode }) => ({
   define: {
     __API_BASE_URL__: JSON.stringify(
       mode === 'production'
-        ? 'https://ssecom.onrender.com' // prod backend
-        : '' // local = use proxy
+        ? 'https://ssecom.onrender.com'
+        : ''
     ),
   },
-}));
+  build: {
+    minify: 'esbuild',
+    outDir: 'dist',
+    sourcemap: false,
+  },
+}))

@@ -43,7 +43,7 @@ const {user}= useContext(AuthContext); // Assuming you have an AuthContext to ge
 
     try {
       await axios.post("/api/reviews", {
-        userId: user.id, // Replace with actual user ID from auth,
+        user_id: user.usid, // Replace with actual user ID from auth,
         productId,
         rating,
         comment,

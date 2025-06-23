@@ -115,7 +115,7 @@ const DealsandOffer = () => {
         </div>
 
         {/* Product List */}
-        <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="md:col-span-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {products.map((product) => (
             <div key={product.id} className="bg-white p-3  rounded shadow hover:shadow-md transition">
               <img

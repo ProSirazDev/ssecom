@@ -73,7 +73,7 @@ function App() {
           <Route path="returns" element={<ReturnPolicy />} />
           <Route path="checkout" element={<Checkout />} />
             <Route path="delivery-address" element={<DeliveryAddress />} />
-          <Route path="address/:userId" element={<Address/>} />
+          <Route path="address/:usid" element={<Address/>} />
           <Route path="thankyou" element={<ThankYou />} />
             <Route path="my-profile" element={<MyProfile />} >
             <Route path="orders" element={<Orders />} /></Route>

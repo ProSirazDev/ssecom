@@ -1,10 +1,11 @@
 import express from 'express';
-import { getAddressesByUser } from '../controllers/address.contoller.js';
+import { createAddress, getAddressesByUser } from '../controllers/address.contoller.js';
 
 const router = express.Router();
 
 
-router.get('/:userId', getAddressesByUser);
+router.get('/:usid', getAddressesByUser);
+router.post('/', createAddress);
 
 
 export default router;

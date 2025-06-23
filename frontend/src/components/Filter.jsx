@@ -28,10 +28,10 @@ const {brands} =useBrands()
 
   return (
     <aside className="col-span-3 bg-white rounded-lg shadow p-4">
-      <h2 className="text-lg font-semibold mb-4">Filters</h2>
+      <h2 className="text-lg font-semibold mb-4 text-teal-500">Filters</h2>
 
       <div className="mb-4">
-        <h3 className="font-medium mb-2">Category</h3>
+        <h3 className="font-medium mb-2 text-orange-500">Category</h3>
         {categories.map(cat => (
           <label key={cat.id} className="block text-sm text-gray-700">
             <input
@@ -45,7 +45,7 @@ const {brands} =useBrands()
       </div>
 
       <div className="mb-4">
-        <h3 className="font-medium mb-2">Brand</h3>
+        <h3 className="font-medium mb-2 text-orange-500">Brand</h3>
         {brands.map(brand => (
           <label key={brand.id} className="block text-sm text-gray-700">
             <input
@@ -59,7 +59,7 @@ const {brands} =useBrands()
       </div>
 
       <div className="mb-4">
-        <h3 className="font-medium mb-2">Discount</h3>
+        <h3 className="font-medium mb-2 text-orange-500">Discount</h3>
         {['60', '50', '40'].map(discount => (
           <label key={discount} className="block text-sm text-gray-700">
             <input
@@ -73,16 +73,16 @@ const {brands} =useBrands()
       </div>
 
       <div className="mb-4">
-        <h3 className="font-medium mb-2">Price</h3>
+        <h3 className="font-medium mb-2 text-orange-500">Price</h3>
         <input
           type="range"
           min="0"
           max="50000"
           value={filters.price}
           onChange={handlePriceChange}
-          className="w-full"
+          className="w-full text-teal-500"
         />
-        <p className="text-sm text-gray-600">Up to ${filters.price}</p>
+        <p className="text-sm text-gray-600">Up to {filters.price} &#x20B9;</p>
       </div>
     </aside>
   );

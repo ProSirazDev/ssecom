@@ -1,95 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import useCategories from '../customhooks/categories';
 
-const categories = [
-  {
-    name: 'Electronics',
-    image: 'https://rukminim2.flixcart.com/flap/128/128/image/69c6589653afdb9a.png?q=100',
-    link: '/category/electronics',
-    subCategories: ['Mobiles', 'Laptops', 'Cameras'],
-  },
-  {
-    name: 'Clothing',
-    image: 'https://rukminim2.flixcart.com/fk-p-flap/128/128/image/0d75b34f7d8fbcb3.png?q=100',
-    link: '/category/clothing',
-    subCategories: ['Men', 'Women', 'Kids'],
-  },
-  {
-    name: 'Home & Garden',
-    image: 'https://rukminim2.flixcart.com/flap/64/64/image/ab7e2b022a4587dd.jpg?q=100',
-    link: '/category/home',
-    subCategories: ['Furniture', 'Decor', 'Kitchen'],
-  },
-  {
-    name: 'Home & Garden',
-    image: 'https://rukminim2.flixcart.com/flap/64/64/image/22fddf3c7da4c4f4.png?q=100',
-    link: '/category/home',
-    subCategories: ['Furniture', 'Decor', 'Kitchen'],
-  },
-  {
-    name: 'Home & Garden',
-    image: 'https://rukminim2.flixcart.com/fk-p-flap/64/64/image/0139228b2f7eb413.jpg?q=100',
-    link: '/category/home',
-    subCategories: ['Furniture', 'Decor', 'Kitchen'],
-  },
-  {
-    name: 'Home & Garden',
-    image: 'https://rukminim2.flixcart.com/flap/64/64/image/29327f40e9c4d26b.png?q=100',
-    link: '/category/home',
-    subCategories: ['Furniture', 'Decor', 'Kitchen'],
-  },
-
-
-];
 
 const Menu = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const { categories = [] } = useCategories();
+  const [hovered, setHovered] = useState(null);
+
+  // Group categories: parents and their subcategories
+  const categoryTree = useMemo(() => {
+    const parents = categories.filter(cat => !cat.parent_id);
+    const children = categories.filter(cat => cat.parent_id);
+
+    return parents.map(parent => ({
+      ...parent,
+      sub: children.filter(child => child.parent_id === parent.id),
+    }));
+  }, [categories]);
 
   return (
-    <nav className=" py-2 ">
-      <div className=" mx-auto px-4 relative">
-        <ul className="flex flex-wrap justify-center gap-6">
-          {categories.map((cat, index) => (
-            <li
-              key={cat.name}
-              className="relative group"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <Link
-                to={cat.link}
-                className="flex flex-col items-center text-center text-gray-700 hover:text-indigo-600 transition"
-              >
-                <img
-                  src={cat.image}
-                  alt={cat.name}
-                  className="w-10 h-10  rounded mb-1"
-                />
-                <span className="text-sm">{cat.name}</span>
-              </Link>
+    <div className="bg-gradient-to-r from-teal-500 to-teal-700 shadow text-white">
+      <div className="max-w-7xl mx-auto flex gap-6 py-2 px-4 relative">
+        {categoryTree.map((cat, idx) => (
+          <div
+            key={cat.id}
+            className="relative"
+            onMouseEnter={() => setHovered(idx)}
+            onMouseLeave={() => setHovered(null)}
+          >
+            <button className="text-sm font-medium px-2 py-1 border-b-4 border-transparent hover:border-white transition whitespace-nowrap">
+              {cat.category_name}
+            </button>
 
-              {/* Subcategory Dropdown */}
-              {hoveredIndex === index && cat.subCategories?.length > 0 && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-44 bg-white  shadow-md rounded-md z-50">
-                  <ul className="py-2 text-sm text-gray-700">
-                    {cat.subCategories.map((sub, i) => (
-                      <li key={i}>
-                        <Link
-                          to={`${cat.link}/${sub.toLowerCase()}`}
-                          className="block px-4 py-2 hover:bg-indigo-50 hover:text-indigo-600"
-                        >
-                          {sub}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
+            {hovered === idx && cat.sub.length > 0 && (
+              <div className="absolute left-0 top-full mt-2 bg-white shadow-lg border border-gray-200 rounded w-64 z-50">
+                <ul className="py-2 text-sm text-gray-800">
+                  {cat.sub.map(sub => (
+                    <li key={sub.id}>
+                      <Link
+                        to={`/products/${sub.id}`}
+                        className="block px-4 py-2 hover:bg-teal-500 hover:text-white transition"
+                      >
+                        {sub.category_name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-    </nav>
+    </div>
   );
 };
 

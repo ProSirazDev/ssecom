@@ -73,10 +73,12 @@ const Products = () => {
   const totalPages = Math.ceil(total / limit);
 
   return (
-    <div className="grid grid-cols-12 gap-6 px-6 py-8 bg-[#f9f9f9]">
-      <Filter filters={filters} setFilters={setFilters} />
+    <div className="w-full grid grid-cols-2 sm:grid-cols-12 gap-6 px-6 py-8 bg-[#f9f9f9]">
+      <div className=' sm:col-span-3'>
+        <Filter filters={filters} setFilters={setFilters}  />
+      </div>
 
-      <section className="col-span-9">
+      <section className=" sm:col-span-9">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map(product => {
             // Extract unique sizes and colors from product.option if available and is array
@@ -88,9 +90,9 @@ const Products = () => {
               <Link
                 to={`/productdetails/${product.id}`}
                 key={product.id}
-                className="bg-white border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 p-4"
+                className="bg-white w-full border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 p-4"
               >
-                <div className="h-48 bg-gray-100 mb-4 overflow-hidden">
+                <div className="sm:h-48 bg-gray-100 mb-4 overflow-hidden">
                   <img
                     src={product.unit_image || 'https://via.placeholder.com/200x300'}
                     alt={product.product_name}
@@ -142,7 +144,7 @@ const Products = () => {
         </div>
 
         {/* Pagination Controls */}
-        { totalPages >= 2 && (
+      { filteredProducts.length > 20|| total > limit && (
           <div className="flex justify-center mt-8">
             <div className="inline-flex items-center gap-1">
               <button

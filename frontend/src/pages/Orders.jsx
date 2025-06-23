@@ -5,6 +5,7 @@ import Ratings from '../components/Ratings';
 import { FaBackspace, FaExchangeAlt, FaStar } from 'react-icons/fa';
 import Ordertimeline from '../components/Ordertimeline';
 import Loader from '../components/Loader';
+import { FaTruckFast } from 'react-icons/fa6';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -17,10 +18,10 @@ const Orders = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      if (!user?.id) return;
+      if (!user?.usid) return;
 
       try {
-        const response = await axios.get(`/api/orders/customer/${user.id}`);
+        const response = await axios.get(`/api/orders/customer/${user.usid}`);
         setOrders(response.data || []);
       } catch (error) {
         console.error('Failed to fetch orders:', error);
@@ -44,10 +45,13 @@ const Orders = () => {
 
   return (
     <div className=" w-full mx-auto bg-gray-50 py-6 px-4 md:px-8">
-      <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">
-        🧾 Your Orders
+      <div className='flex items-center mb-8 gap-x-3'>
+       <FaTruckFast className='text-teal-500 text-3xl'/>
+      <h2 className="text-2xl font-medium  text-center text-teal-500">
+      Orders
       </h2>
-
+     
+</div>
       {loading ? (
         <div className="flex  justify-center py-10 w-full mx-auto h-screen"><Loader/></div>
       ) : orders.length === 0 ? (

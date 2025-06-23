@@ -52,7 +52,7 @@ export const getReviewsForProduct = async (req, res) => {
 
     try {
         const result = await pool.query(`
-            SELECT r.*, u.id AS user_name
+            SELECT r.*, u.firstname AS user_name
             FROM reviews r
             JOIN users u ON r.user_id = u.id
             WHERE r.product_id = $1

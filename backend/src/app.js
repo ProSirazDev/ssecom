@@ -14,6 +14,7 @@ import paymentRoutes from '../src/routes/payment.routes.js'; // ✅ FIXED: added
 import cookieParser from 'cookie-parser'; // ✅ FIXED: added 'cookie-parser' import
 import addressRoutes from '../src/routes/address.routes.js'; // ✅ FIXED: added 'address.routes' import
 import metricsRoute from './routes/metrics.route.js';
+import couponRoutes from './routes/coupon.routes.js'
 import { httpRequestCounter } from './metrics/metrics.js';
 
 const app = express();
@@ -50,6 +51,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/reviews", reviewsRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/address', addressRoutes);
+app.use('/api/coupons', couponRoutes);
 app.use('/metrics', metricsRoute);
 
 

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaTags, FaCheckCircle, FaCopy } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import axios from "../utils/axiosInstance";
 
 const coupons = [
   {
@@ -29,6 +30,21 @@ const CouponOffers = () => {
     toast.success(`Coupon "${code}" copied!`);
   };
 
+    const [coupons, setCoupons] = useState([]);
+
+  useEffect(() => {
+    const fetchCoupons = async () => {
+      try {
+        const res = await axios.get('/api/coupons');
+        setCoupons(res.data);
+      } catch (err) {
+        toast.error("Failed to fetch coupons");
+      }
+    };
+  
+    fetchCoupons();
+  }, []);
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-5  shadow-sm">
       <h3 className="text-lg font-semibold text-gray-800 flex items-center mb-4">
@@ -43,18 +59,19 @@ const CouponOffers = () => {
             className="border border-gray-200 p-4 rounded-md flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition"
           >
             <div>
-              <p className="text-sm font-bold text-gray-800">{coupon.code}</p>
+              <p className="text-sm font-bold text-gray-800">{coupon.coupon_code}</p>
               <p className="text-sm text-gray-600">{coupon.description}</p>
               <p className="text-xs text-gray-500">
-                Min. Order: {coupon.minOrder} • Expires: {coupon.expiry}
+                Min Order: {coupon.minimum_order_value} • Expires: {coupon.valid_to}
               </p>
+              <p className='text-xs text-gray-500'>*Terms and Conditions apply</p>
             </div>
             <button
-              onClick={() => copyCode(coupon.code)}
-              className="flex items-center text-sm bg-orange-600 hover:bg-teal-700 text-white px-3 py-1 "
+              onClick={() => copyCode(coupon.coupon_code)}
+              className="flex items-center text-xs bg-orange-600 hover:bg-teal-700 text-white px-3 py-1 "
             >
               {/* <FaCopy className="mr-1" /> */}
-               Apply
+               Copy
             </button>
           </div>
         ))}

@@ -40,12 +40,12 @@ const ImageSlider = () => {
   };
 
   return (
-    <div className="w-full h-[300px] md:h-[400px] overflow-hidden">
+    <div className="w-full h-[200px] md:h-[400px] overflow-hidden">
       <Slider {...settings}>
         {images.map((item, index) => (
           <div
             key={index}
-            className="relative w-full h-[400px] md:h-[400px] overflow-hidden"
+            className="relative w-full h-[200px] md:h-[400px] overflow-hidden"
           >
             {/* Image */}
             <img
@@ -56,7 +56,7 @@ const ImageSlider = () => {
 
             {/* Overlay Text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 text-white text-center px-4">
-              <h2 className="text-xl md:text-3xl font-medium mb-4 text-orange-500  ">{item.title}</h2>
+              <h2 className="text-xl md:text-3xl font-medium mb-4 text-white  ">{item.title}</h2>
               <Link
                 to={item.link}
                 className="bg-white text-black px-6 py-2  hover:bg-gray-200 transition"

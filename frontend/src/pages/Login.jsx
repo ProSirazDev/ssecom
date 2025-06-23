@@ -4,11 +4,13 @@ import axios from '../utils/axiosInstance';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useAuth} from '../globalstate/authcontext.jsx'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setUser } = useAuth();  // get setUser from context
+  const navigate = useNavigate(); // Assuming you are using react-router-dom for navigation
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,6 +24,8 @@ const Login = () => {
 
       // Optionally save user in localStorage to persist login after refresh
       localStorage.setItem('user', JSON.stringify(response.data.user));
+
+      navigate('/my-profile')
 
       // Redirect or do something else after login
       console.log('Logged in user:', response.data.user);
@@ -81,7 +85,7 @@ const Login = () => {
             {/* Login Button */}
             <button
               type="submit"
-              className="w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition"
+              className="w-full bg-teal-500 text-white py-2 rounded hover:bg-teal-600 transition"
             >
               Login
             </button>
@@ -90,7 +94,7 @@ const Login = () => {
           {/* Divider */}
           <div className="mt-6 text-center text-sm text-gray-500">
             Don’t have an account?{' '}
-            <a href="/signup" className="text-indigo-600 hover:underline">Sign Up</a>
+            <Link to="/signup" className="text-teal-500 text-lg font-medium ml-3 hover:text-teal-600 cursor-pointer">Sign Up</Link>
           </div>
         </div>
       </div>

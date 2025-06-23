@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const createAddress = async (req, res) => {
   try {
     const {
-      user_id, full_name, mobile_optional, address_line1,
+      usid, full_name, mobile_optional, address_line1,
       address_line2, landmark, city, state, postal_code,
       country = 'India', is_default = false, cby, uby
     } = req.body;
@@ -15,7 +15,7 @@ export const createAddress = async (req, res) => {
 
     const result = await pool.query(
       `INSERT INTO customer_address (
-        id, user_id, full_name, mobile_optional,
+        id, usid, full_name, mobile_optional,
         address_line1, address_line2, landmark,
         city, state, postal_code, country,
         is_default, cby, uby
@@ -26,7 +26,7 @@ export const createAddress = async (req, res) => {
         $12, $13, $14
       ) RETURNING *`,
       [
-        id, user_id, full_name, mobile_optional,
+        id, usid, full_name, mobile_optional,
         address_line1, address_line2, landmark,
         city, state, postal_code, country,
         is_default, cby, uby
@@ -43,10 +43,10 @@ export const createAddress = async (req, res) => {
 // READ ALL BY USER
 export const getAddressesByUser = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { usid } = req.params;
     const result = await pool.query(
-      `SELECT * FROM customer_address WHERE user_id = $1 ORDER BY cdate DESC`,
-      [userId]
+      `SELECT * FROM customer_address WHERE usid = $1 ORDER BY cdate DESC`,
+      [usid]
     );
     res.json(result.rows);
   } catch (error) {

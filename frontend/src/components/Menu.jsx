@@ -1,13 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { FiMenu, FiX } from 'react-icons/fi'; // Icons for open/close
 import useCategories from '../customhooks/categories';
-
 
 const Menu = () => {
   const { categories = [] } = useCategories();
   const [hovered, setHovered] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Group categories: parents and their subcategories
   const categoryTree = useMemo(() => {
     const parents = categories.filter(cat => !cat.parent_id);
     const children = categories.filter(cat => cat.parent_id);
@@ -20,7 +20,16 @@ const Menu = () => {
 
   return (
     <div className="bg-gradient-to-r from-teal-500 to-teal-700 shadow text-white">
-      <div className="max-w-7xl mx-auto flex gap-6 py-2 px-4 relative">
+      {/* Mobile toggle button */}
+      <div className="flex justify-between items-center px-4 py-2 lg:hidden">
+        <h1 className="text-lg font-bold">Categories</h1>
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="text-white text-2xl">
+          {mobileOpen ? <FiX /> : <FiMenu />}
+        </button>
+      </div>
+
+      {/* Desktop menu */}
+      <div className="max-w-7xl mx-auto gap-6 px-4 py-2 hidden lg:flex relative">
         {categoryTree.map((cat, idx) => (
           <div
             key={cat.id}
@@ -51,6 +60,31 @@ const Menu = () => {
           </div>
         ))}
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="lg:hidden px-4 pb-4">
+          {categoryTree.map(cat => (
+            <div key={cat.id} className="mb-2">
+              <p className="font-semibold">{cat.category_name}</p>
+              {cat.sub.length > 0 && (
+                <ul className="ml-4 mt-1 space-y-1">
+                  {cat.sub.map(sub => (
+                    <li key={sub.id}>
+                      <Link
+                        to={`/products/${sub.id}`}
+                        className="text-sm block text-white hover:underline"
+                      >
+                        {sub.category_name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

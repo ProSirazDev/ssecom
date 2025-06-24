@@ -23,26 +23,25 @@ const DeliveryAddress = () => {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user?.usid) {
-      fetch(`/api/address/${user.usid}`)
-        .then(res => {
-          if (!res.ok) throw new Error("Failed to fetch addresses");
-          return res.json();
-        })
-        .then(data => {
-          setAddresses(data);
-          const defaultAddr = data.find(addr => addr.is_default);
-          if (defaultAddr) setSelectedAddressId(defaultAddr.id);
-        })
-        .catch(error => {
-          console.error("Error:", error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+useEffect(() => {
+  if (!user?.usid) return;
+
+  const fetchAddresses = async () => {
+    try {
+      const res = await axios.get(`/api/address/${user.usid}`);
+      setAddresses(res.data);
+      const defaultAddr = res.data.find(addr => addr.is_default);
+      if (defaultAddr) setSelectedAddressId(defaultAddr.id);
+    } catch (err) {
+      console.error("Address fetch error:", err);
+    } finally {
+      setLoading(false);
     }
-  }, [user]);
+  };
+
+  fetchAddresses();
+}, [user]);
+
 
   const total = cartItems.reduce(
     (sum, item) => sum + Number(item.price) * item.quantity,

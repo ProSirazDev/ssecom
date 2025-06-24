@@ -76,7 +76,8 @@ function App() {
           <Route path="address/:usid" element={<Address/>} />
           <Route path="thankyou" element={<ThankYou />} />
             <Route path="my-profile" element={<MyProfile />} >
-            <Route path="orders" element={<Orders />} /></Route>
+            </Route>
+            <Route path="orders" element={<Orders />} />
 
           <Route path="*" element={<Notfound />} />
         </Route>

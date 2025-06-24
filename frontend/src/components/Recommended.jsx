@@ -13,16 +13,16 @@ const Recommended = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="  py-10">
       <div className="flex justify-between items-center px-6 pb-5">
-        <h2 className="text-xs sm:text-sm sm:font-semibold text-white bg-teal-500 px-1 sm:px-3 py-1 rounded-tr-2xl rounded-bl-2xl">
-          New Arrivals 🎈
+        <h2 className="text-xl sm:text-xl sm:font-semibold text-black px-1 sm:px-3 py-1 rounded-tr-2xl rounded-bl-2xl">
+          New Arrivals Products🎈
         </h2>
         <Link
           to="/products"
-          className="text-white bg-teal-500 px-3 py-1 hover:underline text-xs sm:text-sm  sm:font-medium"
+          className="text-xl sm:text-xl sm:font-semibold text-black px-3 py-1 hover:underline "
         >
-          Show All
+          View All
         </Link>
       </div>
 
@@ -36,17 +36,17 @@ const Recommended = () => {
     <Link
       to={`/productdetails/${product.id}`}
       key={product.id}
-      className="group overflow-hidden bg-white border border-gray-100 shadow hover:shadow-md transition duration-300 block rounded-lg"
+      className="group overflow-hidden bg-white border border-gray-100 shadow hover:shadow-md transition duration-300 block "
     >
       <img
         src={product.unit_image || 'https://via.placeholder.com/200x300'}
         alt={product.product_name}
-        className="w-full h-42 object-cover transition-transform duration-500 group-hover:scale-105"
+        className="w-full p-3 h-42 object-cover transition-transform duration-500 group-hover:scale-105"
       />
 
       <div className="p-4 bg-white space-y-2">
         <h3 className="text-md font-semibold text-gray-800 truncate">{product.product_name}</h3>
-        <p className="text-sm text-gray-600">{product.model}</p>
+        {/* <p className="text-sm text-gray-600">{product.model}</p> */}
        
 
         {/* Sizes */}
@@ -78,7 +78,7 @@ const Recommended = () => {
           </div>
         )}
 
-         <span className="text-sm font-medium text-black block">Rs {product.price}</span></div>
+         <span className="text-sm font-medium text-teal-600 block">&#x20B9; {product.price}</span></div>
         
       </div>
     </Link>

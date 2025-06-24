@@ -5,20 +5,23 @@ import TopCategories from "../components/TopCategories";
 import Recommended from "../components/Recommended";
          import Banner from '../components/Banner'
 import Brands from "../components/Brands";
+import Whyus from "../components/Whyus";
 
 const Home = () => {
   return (<>
 
        <Banner></Banner>
-     <div className="!bg-gray-100 text-gray-800  mx-auto space-y-10 px-3 pb-3">
+     <div className="!bg-gray-100 text-gray-800  mx-auto  pb-3">
       {/* <Menu/> */}
-     
+   
  <TopCategories />
+   <Recommended />
       <DealsandOffer />
 
      
-      <Recommended />
+      
       <Brands/>
+      <Whyus/>
    
 
       {/* 📢 Call to Action */}

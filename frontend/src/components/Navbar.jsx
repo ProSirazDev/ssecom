@@ -11,6 +11,11 @@ import axios from '../utils/axiosInstance'; // Make sure this is imported
 import { AuthContext } from "../globalstate/authcontext";
 import { toast } from "react-toastify";
 import { useSearch } from "../globalstate/searchcontext";
+import { useRef } from "react";
+
+// Inside Navbar component
+
+
 
 
 const Navbar = () => {
@@ -19,6 +24,19 @@ const Navbar = () => {
   const { searchTerm, setSearchTerm } = useSearch();
   const navigate = useNavigate();
   const location = useLocation();
+  const [userHover, setUserHover] = useState(false);
+const userHoverTimeout = useRef(null);
+
+const handleUserMouseEnter = () => {
+  clearTimeout(userHoverTimeout.current);
+  setUserHover(true);
+};
+
+const handleUserMouseLeave = () => {
+  userHoverTimeout.current = setTimeout(() => {
+    setUserHover(false);
+  }, 150); // delay to prevent flickering
+};
     
 
   // Navigate to /products on searchTerm change
@@ -55,7 +73,7 @@ const handleLogout = async () => {
   return (
     <>
       {/* <Header /> */}
-      <nav className="bg-gray-800 px-2  md:px-10 sticky top-0 z-50 w-full transition-all duration-300 border-b ">
+      <nav className="bg-gradient-to-r from-gray-800 via-sky-900 to-gray-900 text-white px-2 py-1  md:px-10 sticky top-0 z-50 w-full transition-all duration-300 ">
         <div className="flex justify-between items-center gap-x-2">
           <Link to="/" className="flex items-center bg-white hidden md:block rounded-full">
             <img
@@ -71,15 +89,15 @@ const handleLogout = async () => {
            <p className="text-white text-base">Hyderabad : 500008</p></div>
 
              <div className=" relative sm:mx-4    sm:w-[40vw] my-2 sm:my-3 ">
-              <div className="absolute bg-orange-500 inset-y-0  flex items-center justify-center sm:px-2 pointer-events-none">
-                <FiSearch className="h-2 sm:w-4 sm:h-4 text-white" />
+              <div className="absolute bg-orange-500 rounded-l-full inset-y-0  flex items-center justify-center sm:px-2 pointer-events-none">
+                <FiSearch className="h-2 sm:w-4 sm:h-4 text-white rounde-l-full" />
               </div>
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search products..."
-                className="w-full h-3 sm:h-9 pl-10 pr-3 rounded py-3 sm:py-3 border border-gray-200  bg-white text-black placeholder-gray-700 focus:outline-none text-xs  sm:text-sm transition"
+                className="w-full h-3 sm:h-9 pl-10 pr-3 rounded-full py-3 sm:py-3 border border-gray-200  bg-white text-black placeholder-gray-700 focus:outline-none text-xs  sm:text-sm transition"
               />
             </div>
 
@@ -87,32 +105,38 @@ const handleLogout = async () => {
             {/* User Icon */}
            <div className="flex justify-end sm:my-2 space-x-1 md:space-x-16">
   {/* User Icon */}
-  <div className="relative group">
-    {isLoggedIn ? (
-      <>
-        <button className="flex items-center justify-center text-white group-hover:text-teal-600">
-          <FaUserCircle  className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
-        <div className="absolute right-0 mt-1 w-60 bg-white rounded-md shadow-lg py-2 z-50 border border-gray-200 hidden group-hover:block">
+ <div
+  className="relative"
+  onMouseEnter={handleUserMouseEnter}
+  onMouseLeave={handleUserMouseLeave}
+>
+  {isLoggedIn ? (
+    <>
+      <button className="flex items-center justify-center text-white">
+        <FaUserCircle className="h-5 w-5 sm:h-6 sm:w-6" />
+      </button>
+
+      {userHover && (
+        <div className="absolute right-0 mt-1 w-60 bg-white rounded-md shadow-lg py-2 z-50 border border-gray-200">
           <div className="px-4 py-2 text-sm text-gray-700 font-semibold">
             Welcome, {userName}
           </div>
-          <hr />
+          {/* <hr /> */}
           <Link
             to="/my-profile"
-            className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-2 text-md text-gray-700  hover:text-teal-500 hover:underline"
           >
             My Profile
           </Link>
           <Link
             to="/orders"
-            className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-2 text-md text-gray-700  hover:text-teal-500 hover:underline"
           >
             Orders
           </Link>
           <Link
             to={`/address/${user.usid}`}
-            className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100"
+            className="block px-4 py-2 text-md text-gray-700  hover:text-teal-500 hover:underline"
           >
             Address
           </Link>
@@ -123,45 +147,24 @@ const handleLogout = async () => {
             Logout
           </button>
         </div>
-      </>
-    ) : (
-  <>
-    {/* 👤 User Icon Button */}
-   <Link
-    to="/login"
-    className="flex items-center justify-center text-white   hover:text-indigo-600"
-  >
-    <FaUserCircle  className=" h-5 w-5 sm:h-6 sm:w-6 text-white" />
-  </Link>
-    {/* 🔐 SignIn Modal */}
-    {/* {showModal && (
-      <div className="fixed inset-0 z-50 bg-opacity-50 flex items-center justify-center">
-        <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md relative">
-          <button
-            onClick={() => setShowModal(false)}
-            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-          >
-            ✕
-          </button>
-             <h2 className="text-xl font-semibold mb-4">
-        {modalStep === "signin" ? "Sign In" : "Verify OTP"}
-      </h2>
+      )}
+    </>
+  ) : (
+    <Link
+      to="/login"
+      className="flex items-center justify-center text-white hover:text-indigo-600"
+    >
+      <FaUserCircle className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+    </Link>
+  )}
+</div>
 
-      {modalStep === "signin" && <MobileSignin />}
-      {modalStep === "otp" && <OtpVerify />}
-        </div>
-      </div>
-    )} */}
-  </>
-)}
-  </div>
-  
      
 
   {/* Become Seller Icon */}
   <Link
     to="/becomeseller"
-    className="flex items-center justify-center text-black hidden md:block   hover:text-indigo-600"
+    className="flex items-center justify-center text-white hidden md:block   hover:text-indigo-600"
   >
     <FaHeart  className="h-6 w-6 text-white" />
   </Link>
@@ -169,7 +172,7 @@ const handleLogout = async () => {
   {/* Cart Icon */}
   <Link
     to="/cart"
-    className="relative flex items-center justify-center   text-black hover:text-indigo-600"
+    className="relative flex items-center justify-center   text-white hover:text-indigo-600"
   >
     <FaShoppingCart  className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
     {cartCount > 0 && (

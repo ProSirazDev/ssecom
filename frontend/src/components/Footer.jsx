@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Footer = () => {
   // window.scrollTo({ top: 0, behavior: 'smooth' });
   return (
-    <footer className="bg-[#232F3E] shadow-inner mt-12">
+    <footer className="bg-gradient-to-r from-gray-800 via-sky-900 to-gray-900 shadow-inner mt-12">
       <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 text-sm text-white">
 
         {/* Company Info */}

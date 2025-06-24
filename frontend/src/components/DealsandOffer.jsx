@@ -102,7 +102,7 @@ const DealsandOffer = () => {
   }, []);
 
   return (
-    <div className=" py-10   mx-auto">
+    <div className=" py-10 bg-teal-500/10   mx-auto">
       {/* <h2 className="text-2xl font-bold mb-6 text-indigo-700">🔥 Deals & Offers</h2> */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6">
         {/* Countdown Timer */}

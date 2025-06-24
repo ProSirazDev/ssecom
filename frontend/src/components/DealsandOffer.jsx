@@ -123,7 +123,7 @@ const DealsandOffer = () => {
                 alt={product.name}
                 className="w-full h-24 object-cover rounded mb-4"
               />
-              <h4 className="font-sm text-sm text-gray-800 mb-1 whitespace-nowrap">{product.name}</h4>
+              <h4 className="font-sm text-sm text-gray-800 mb-1 whitespace-nowrap overflow-hidden">{product.name}</h4>
               <div className="text-sm text-gray-600 mb-2">
                 <span className="text-black font-bold">Rs {product.price.toFixed(2)}</span>
                <span

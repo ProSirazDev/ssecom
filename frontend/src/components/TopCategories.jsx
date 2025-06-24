@@ -14,7 +14,7 @@ const filteredCategories = parentCategories.slice(0, 8);
     {/* <h2 className="w-44 text-base font-semibold text-white bg-teal-500 px-3 py-1 rounded-tr-2xl rounded-bl-2xl">
           TOP CATEGORIES 🔥
         </h2> */}
-         <div className=" mx-auto  grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+         <div className=" mx-auto  grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6 sm:p-4">
       {filteredCategories.map((category) => (
         <Link
           to={`/products/${category.id}`}

@@ -15,18 +15,18 @@ const Recommended = () => {
   return (
     <div className="">
       <div className="flex justify-between items-center px-6 pb-5">
-        <h2 className="text-base font-semibold text-white bg-teal-500 px-3 py-1 rounded-tr-2xl rounded-bl-2xl">
+        <h2 className="text-xs sm:text-sm sm:font-semibold text-white bg-teal-500 px-1 sm:px-3 py-1 rounded-tr-2xl rounded-bl-2xl">
           New Arrivals 🎈
         </h2>
         <Link
           to="/products"
-          className="text-white bg-teal-500 px-3 py-1 hover:underline text-sm font-medium"
+          className="text-white bg-teal-500 px-3 py-1 hover:underline text-xs sm:text-sm  sm:font-medium"
         >
           Show All
         </Link>
       </div>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 px-4">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:px-4">
 {products.slice(0, 10).map(product => {
   const options = Array.isArray(product.option) ? product.option : [];
   const sizes = [...new Set(options.map(opt => opt.size))];

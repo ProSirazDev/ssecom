@@ -1,10 +1,6 @@
-// src/utils/axiosInstance.js
-
-import axios from 'axios';
-
 const instance = axios.create({
-  baseURL: __API_BASE_URL__, // '' in dev, full in prod
-  withCredentials: true, // if using cookies/session
+  baseURL: import.meta.env.VITE_API_BASE_URL, // Vite syntax
+  withCredentials: true,
 });
 
 export default instance;

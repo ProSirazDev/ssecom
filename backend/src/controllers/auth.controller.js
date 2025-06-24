@@ -91,12 +91,13 @@ export const loginUser = async (req, res) => {
     );
 
     // ✅ Set token in HTTP-only cookie
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: false, // Set to true in production (HTTPS)
-      sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-    });
+res.cookie('token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production', // only use secure cookies in production
+  sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // stricter cross-domain control
+  maxAge: 24 * 60 * 60 * 1000,
+});
+
 
     // ✅ Send user data (exclude password)
     res.status(200).json({

@@ -1,19 +1,17 @@
 import React, { useState, useContext, useEffect } from "react";
-import logo from "../assets/logo3.png";
+
 import { FiSearch, FiMenu, FiX } from "react-icons/fi";
-import { IoBagOutline, IoHeartOutline, IoPersonOutline } from "react-icons/io5";
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from "../globalstate/cartcontext";
 import { FaShoppingCart ,FaHeart,FaUserCircle, FaLocationArrow  } from "react-icons/fa";
+import axios from '../utils/axiosInstance'; // Make sure this is imported
 
-import Header from "./Header";
-import Menu from "./Menu";
+
 import { AuthContext } from "../globalstate/authcontext";
 import { toast } from "react-toastify";
 import { useSearch } from "../globalstate/searchcontext";
-import Login from "../pages/Login";
-import MobileSignin from "../pages/MobileSignin";
-import OtpVerify from "../pages/OtpVerify";
+
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,15 +35,13 @@ const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const handleLogout = async () => {
+
+const handleLogout = async () => {
   try {
-    await fetch('http://localhost:5000/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
-    });
+    await axios.post('/api/auth/logout', {}, { withCredentials: true });
 
     toast.success("Logged Out Successfully");
-    
+
     setUser(null);
     navigate('/');
   } catch (err) {
@@ -53,6 +49,7 @@ const Navbar = () => {
     toast.error('Failed to logout');
   }
 };
+
 
 
   return (

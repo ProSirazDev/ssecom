@@ -29,13 +29,13 @@ const MyProfile = () => {
   return (
     <div className="flex  max-w-7xl mx-auto ">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-100 p-6  border-r border-gray-200">
-        <h2 className="text-xl font-semibold mb-6 text-orange-500">My Profile</h2>
+      <aside className="sm:w-64 w-24 bg-gray-100 sm:p-6  border-r border-gray-200">
+        <h2 className="sm:text-xl text-sm font-semibold mb-6 pl-3 sm:[pl-none] text-orange-500">My Profile</h2>
         <ul className="space-y-4">
           <li>
             <button
               onClick={() => setActiveTab('my-account')}
-              className={`w-full text-left px-3 py-2 rounded ${
+              className={`w-full text-sm sm:text-base whitespace-nowrap text-left px-3 py-2 rounded ${
                 activeTab === 'account'
                   ? 'bg-teal-500 text-white'
                   : 'text-gray-700 hover:bg-gray-200'
@@ -47,19 +47,19 @@ const MyProfile = () => {
           <li>
             <button
               onClick={() => setActiveTab('orders')}
-              className={`w-full text-left px-3 py-2 rounded ${
+              className={`w-full text-sm sm:text-base whitespace-nowrap text-left px-3 py-2 rounded ${
                 activeTab === 'orders'
                   ? 'bg-teal-500 text-white'
                   : 'text-gray-700 hover:bg-gray-200'
               }`}
             >
-              Order History
+              Orders
             </button>
           </li>
              <li>
             <button
               onClick={() => setActiveTab('address')}
-              className={`w-full text-left px-3 py-2 rounded ${
+              className={`w-full text-sm sm:text-base whitespace-nowrap text-left px-3 py-2 rounded ${
                 activeTab === 'address'
                   ? 'bg-teal-500 text-white'
                   : 'text-gray-700 hover:bg-gray-200'
@@ -71,7 +71,7 @@ const MyProfile = () => {
           <li>
             <button
               onClick={() => setActiveTab('settings')}
-              className={`w-full text-left px-3 py-2 rounded ${
+              className={`w-full text-sm sm:text-base whitespace-nowrap text-left px-3 py-2 rounded ${
                 activeTab === 'settings'
                   ? 'bg-teal-500 text-white'
                   : 'text-gray-700 hover:bg-gray-200'

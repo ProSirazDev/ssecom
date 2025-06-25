@@ -64,14 +64,14 @@ const Orders = () => {
               className="bg-white rounded-xl shadow-md p-5 border border-gray-100"
             >
               <div className="flex justify-between items-center mb-2">
-                <h3 className="text-lg font-semibold text-gray-700">
+                <h3 className="text-sm sm:text-lg font-semibold text-gray-700">
                   {order.order_id}
                 </h3>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 place-items-end">
                   Date: {new Date(order.cdate).toLocaleString()}
                 </p>
               </div>
-              <div className="grid grid-cols-3 gap-4 items-center justify-center  pb-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center justify-center  pb-2">
               <div className='flex gap-4 items-start '>    <img
                   src={order.unit_image}
                   alt={order.product_name}
@@ -92,7 +92,8 @@ const Orders = () => {
             <p className='text-xs font-medium text-gray-800'>Kolkata</p>
             
             </div>
-                 <div className='flex justify-end w-full items-center  h-full'><Ordertimeline currentStatus={order.order_status } /></div>
+                 <div className='flex justify-center sm:justify-end ml-24 sm:ml-[0px] w-16 sm:w-full sm:items-center h-full
+'><Ordertimeline currentStatus={order.order_status } /></div>
               </div>
              
 

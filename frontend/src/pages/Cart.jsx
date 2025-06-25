@@ -126,7 +126,7 @@ useEffect(() => {
             cartItems.map((item) => (
               <div
                 key={item.id}
-                className="grid grid-cols-2 lg:grid-cols-12 items-center bg-white p-4 rounded-md shadow-sm hover:shadow-md transition gap-3"
+                className="grid grid-cols-1 justify-center lg:grid-cols-12 items-center bg-white p-4 rounded-md shadow-sm hover:shadow-md transition gap-3"
               >
                 <div className="col-span-3">
                   <img

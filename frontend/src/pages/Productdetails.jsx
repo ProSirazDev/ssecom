@@ -54,7 +54,7 @@ const ProductDetails = () => {
   const colors = [...new Set((product?.option || []).map((opt) => opt.color))];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10 bg-gray-50">
+    <div className="max-w-7xl mx-auto px-4 sm:py-10 bg-gray-50">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {/* Product Images */}
         <div className="flex justify-center items-start gap-4">

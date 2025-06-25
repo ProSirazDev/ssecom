@@ -55,11 +55,11 @@ const ImageSlider = () => {
             />
 
             {/* Overlay Text */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 text-white text-center px-4">
-              <h2 className="text-xl md:text-xl font-sm mb-4 text-white font-serif  ">{item.title}</h2>
+            <div className="absolute left-[-32] inset-0 flex flex-col items-center justify-center bg-black/30 text-white text-center px-4">
+              <h2 className="text-sm md:text-xl font-sm mb-4 text-white font-serif  ">{item.title}</h2>
               <Link
                 to={item.link}
-                className="bg-white text-black px-5 py-1  hover:bg-gray-200 transition"
+                className="bg-white text-black text-xs px-5 py-1  hover:bg-gray-200 transition"
               >
                 Shop Now
               </Link>

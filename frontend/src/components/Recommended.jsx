@@ -26,7 +26,7 @@ const Recommended = () => {
         </Link>
       </div>
 
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:px-4">
+      <section className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 px-2 sm:px-4">
 {products.slice(0, 10).map(product => {
   const options = Array.isArray(product.option) ? product.option : [];
   const sizes = [...new Set(options.map(opt => opt.size))];

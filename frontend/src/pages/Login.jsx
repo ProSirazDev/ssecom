@@ -37,7 +37,7 @@ const Login = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 bg-gray-50">
       {/* Left Image Section */}
-      <div className="bg-indigo-100">
+      <div className="bg-indigo-100 hidden sm:block">
         <img
           src="https://picsum.photos/200/300/?blur"
           alt="Login Illustration"

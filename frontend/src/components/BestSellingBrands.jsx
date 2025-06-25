@@ -24,8 +24,8 @@ const BestSellingBrands = () => {
     autoplay: true,
     autoplaySpeed: 3000,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 640, settings: { slidesToShow: 1 } },
+      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 640, settings: { slidesToShow: 2 } },
     ],
   };
 
@@ -43,10 +43,10 @@ const BestSellingBrands = () => {
                 alt={item.name}
                 className="w-32 h-32 bg-cover bg-center rounded-full mb-4 border-4 border-teal-100"
               />
-              <h3 className="text-base font-medium text-orange-500">
+              <h3 className="text-sm font-sm text-orange-500">
                 {item.name}
               </h3>
-              <p className="text-teal-600 font-bold">{item.price}</p>
+              {/* <p className="text-teal-600 font-bold">{item.price}</p> */}
             </div>
           </div>
         ))}

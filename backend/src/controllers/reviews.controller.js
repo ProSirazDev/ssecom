@@ -4,9 +4,9 @@ import pool from "../config/db.js"; // Your PostgreSQL pool
  * Create or update a review
  */
 export const createOrUpdateReview = async (req, res) => {
-  const { userId, productId, rating, comment } = req.body;
+  const { user_id, product_id, rating, comment } = req.body;
 
-  if (!userId || !productId || !rating) {
+  if (!user_id || !product_id || !rating) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -16,7 +16,7 @@ export const createOrUpdateReview = async (req, res) => {
       `SELECT 1 FROM order_items oi
        JOIN orders o ON o.id = oi.order_id
        WHERE o.customer_id = $1::uuid AND oi.product_id = $2::uuid`,
-      [userId, productId]
+      [user_id, product_id]
     );
 
     if (purchaseCheck.rowCount === 0) {
@@ -34,7 +34,7 @@ export const createOrUpdateReview = async (req, res) => {
                      comment = EXCLUDED.comment,
                      created_at = CURRENT_TIMESTAMP
        RETURNING *;`,
-      [userId, productId, rating, comment]
+      [user_id, product_id, rating, comment]
     );
 
     res.status(200).json(result.rows[0]);
@@ -54,7 +54,7 @@ export const getReviewsForProduct = async (req, res) => {
         const result = await pool.query(`
             SELECT r.*, u.firstname AS user_name
             FROM reviews r
-            JOIN users u ON r.user_id = u.id
+            JOIN users u ON r.user_id = u.usid
             WHERE r.product_id = $1
             ORDER BY r.created_at DESC;
         `, [productId]);

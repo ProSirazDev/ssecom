@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from '../utils/axiosInstance';
-import { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "../utils/axiosInstance";
 import { AuthContext } from "../globalstate/authcontext";
+import { toast } from "react-toastify";
 
 const Ratings = ({ productId }) => {
   const [reviews, setReviews] = useState([]);
   const [averageRating, setAverageRating] = useState(0);
-  const [formData, setFormData] = useState({
-    name: "",
-    rating: 0,
-    comment: "",
-  });
-const {user}= useContext(AuthContext); // Assuming you have an AuthContext to get user info
-  // Fetch reviews and rating on mount
+  const [formData, setFormData] = useState({ rating: 0, comment: "" });
+
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
-    // fetchReviews();
+    fetchReviews();
     fetchRatingSummary();
   }, [productId]);
 
@@ -38,21 +35,32 @@ const {user}= useContext(AuthContext); // Assuming you have an AuthContext to ge
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, rating, comment } = formData;
-    if (!name || !rating || !comment) return;
+    if (!user) {
+      toast.error("You must be logged in to submit a review.");
+      return;
+    }
+
+    const { rating, comment } = formData;
+    if (!rating || !comment) {
+      toast.warning("Please fill in all fields");
+      return;
+    }
 
     try {
       await axios.post("/api/reviews", {
-        user_id: user.usid, // Replace with actual user ID from auth,
-        productId,
+        user_id: user.usid,
+        product_id: productId,
         rating,
         comment,
       });
+
+      toast.success("Review submitted!");
       fetchReviews();
       fetchRatingSummary();
-      setFormData({ name: "", rating: 0, comment: "" });
+      setFormData({ rating: 0, comment: "" });
     } catch (err) {
       console.error("Error submitting review:", err);
+      toast.error("Failed to submit review. Please try again.");
     }
   };
 
@@ -67,61 +75,63 @@ const {user}= useContext(AuthContext); // Assuming you have an AuthContext to ge
   );
 
   return (
-    <div className="py-5 bg-white rounded">
+    <div className="py-5 bg-white rounded px-4">
       <h2 className="text-2xl font-semibold mb-4">Ratings & Reviews</h2>
 
       <div className="flex items-center mb-6">
-        <span className="text-3xl font-bold mr-2">{averageRating.toFixed(1)}</span>
+        <span className="text-3xl font-bold mr-2">
+          {averageRating.toFixed(1)}
+        </span>
         <div className="flex">
           {[1, 2, 3, 4, 5].map((i) => (
             <Star key={i} filled={i <= Math.round(averageRating)} />
           ))}
         </div>
-        {/* <span className="ml-2 text-sm text-gray-500">({reviews.length} reviews)</span> */}
+        <span className="ml-2 text-sm text-gray-500">
+          ({reviews.length} reviews)
+        </span>
       </div>
 
-    {user && (  <form onSubmit={handleSubmit} className="mb-6 space-y-4">
-        <input
-          type="text"
-          placeholder="Your name"
-          className="w-full border border-gray-300 px-4 py-2 rounded"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        <div className="flex space-x-1">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              type="button"
-              key={star}
-              onClick={() => setFormData({ ...formData, rating: star })}
-            >
-              <Star filled={star <= formData.rating} />
-            </button>
-          ))}
-        </div>
-        <textarea
-          placeholder="Your review"
-          className="w-full border border-gray-300 px-4 py-2 rounded"
-          rows="3"
-          value={formData.comment}
-          onChange={(e) =>
-            setFormData({ ...formData, comment: e.target.value })
-          }
-        />
-        <button
-       
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Submit Review
-        </button>
-      </form>)}
+      {user && (
+        <form onSubmit={handleSubmit} className="mb-6 space-y-4">
+          <div className="flex space-x-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                type="button"
+                key={star}
+                onClick={() =>
+                  setFormData({ ...formData, rating: star })
+                }
+              >
+                <Star filled={star <= formData.rating} />
+              </button>
+            ))}
+          </div>
+          <textarea
+            placeholder="Your review"
+            className="w-full border border-gray-300 px-4 py-2 rounded"
+            rows="3"
+            value={formData.comment}
+            onChange={(e) =>
+              setFormData({ ...formData, comment: e.target.value })
+            }
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Submit Review
+          </button>
+        </form>
+      )}
 
-      {/* <div className="space-y-4">
+      <div className="space-y-4">
         {reviews.map((review, index) => (
           <div key={index} className="border-b pb-4">
             <div className="flex items-center mb-1">
-              <span className="font-semibold mr-2">{review.user_name || review.name}</span>
+              <span className="font-semibold mr-2">
+                {review.user_name || "Anonymous"}
+              </span>
               <div className="flex">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <Star key={i} filled={i <= review.rating} />
@@ -131,7 +141,7 @@ const {user}= useContext(AuthContext); // Assuming you have an AuthContext to ge
             <p className="text-gray-700">{review.comment}</p>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

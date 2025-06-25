@@ -40,14 +40,14 @@ const ProductReview = ({productId}) => {
   return (
        <div className="space-y-4 p-5">
        <div className="flex flex-row items-center  mb-6">
-        <span className="text-3xl text-green-700 font-medium font-serif mr-2">{averageRating.toFixed(1)} </span> 
+        <span className="text-3xl text-green-700 font-medium  mr-2">{averageRating.toFixed(1)} </span> 
         <span className='text-lg text-green-700 font-medium mr-2'> <FaStar/> </span>
         {/* <div className="flex">
           {[1, 2, 3, 4, 5].map((i) => (
             <Star className='text-yellow-400' key={i} filled={i <= Math.round(averageRating)} />
           ))}
         </div> */}
-        <span className="ml-2 text-sm text-gray-500">({reviews.length} reviews)</span>
+        <span className="ml-2 text-sm font-medium text-gray-500">({reviews.length} reviews)</span>
       </div>
         {reviews.map((review, index) => (
           <div key={index} className="border-b border-gray-300 pb-4">

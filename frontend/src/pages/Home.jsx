@@ -6,6 +6,8 @@ import Recommended from "../components/Recommended";
          import Banner from '../components/Banner'
 import Brands from "../components/Brands";
 import Whyus from "../components/Whyus";
+import BestSellingProducts from "../components/BestSellingProducts";
+import BestSellingBrands from "../components/BestSellingBrands";
 
 const Home = () => {
   return (<>
@@ -21,6 +23,8 @@ const Home = () => {
      
       
       <Brands/>
+      <BestSellingProducts/>
+      <BestSellingBrands/>
       <Whyus/>
    
 

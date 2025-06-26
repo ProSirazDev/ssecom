@@ -73,13 +73,13 @@ const Products = () => {
   const totalPages = Math.ceil(total / limit);
 
   return (
-    <div className="w-full grid grid-cols-2 sm:grid-cols-12 gap-6 px-6 py-8 bg-[#f9f9f9]">
-      <div className=' sm:col-span-3'>
+    <div className="w-full sm:grid grid-cols-2 sm:grid-cols-12 gap-6 px-6 py-8 bg-[#f9f9f9]">
+      <div className=' sm:col-span-3 hidden sm:block'>
         <Filter filters={filters} setFilters={setFilters}  />
       </div>
 
       <section className=" sm:col-span-9">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredProducts.map(product => {
             // Extract unique sizes and colors from product.option if available and is array
             const options = Array.isArray(product.option) ? product.option : [];

@@ -233,17 +233,22 @@ export const deleteProduct = async (req, res) => {
 export const getBestSellingProducts = async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT 
-        p.id,
-        p.product_name,
-        p.unit_image,
-        p.price,
-        COUNT(oi.product_id) AS total_sold
-      FROM order_items oi
-      JOIN products p ON p.id = oi.product_id
-      GROUP BY p.id
-      ORDER BY total_sold DESC
-      LIMIT 10;
+     SELECT 
+  p.id,
+  p.product_name,
+  p.unit_image,
+  p.price,
+  COUNT(oi.product_id) AS total_sold
+FROM order_items oi
+JOIN products p ON p.id = oi.product_id
+GROUP BY 
+  p.id,
+  p.product_name,
+  p.unit_image,
+  p.price
+ORDER BY total_sold DESC
+LIMIT 10;
+
     `);
 
     res.status(200).json(result.rows);

@@ -73,7 +73,7 @@ const handleLogout = async () => {
   return (
     <>
       {/* <Header /> */}
-      <nav className="bg-gradient-to-r from-gray-800 via-sky-900 to-gray-900 text-white px-2 py-1  md:px-10 sticky top-0 z-50 w-full transition-all duration-300 ">
+      <nav className="bg-gradient-to-r from-gray-800 via-sky-900 to-gray-900 text-white px-2 py-1  md:px-10 sticky top-0 sm:top-0 z-50 w-full transition-all duration-300 ">
         <div className="flex justify-between items-center sm:gap-x-2">
           <Link to="/" className="flex items-center bg-white hidden md:block rounded-full">
             <img

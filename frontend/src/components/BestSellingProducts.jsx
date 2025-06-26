@@ -51,7 +51,7 @@ const BestSellingProducts = () => {
                 className="w-full h-40 p-3 object-cover"
               />
               <div className="p-4 text-center">
-                <h3 className="text-base font-medium text-gray-700">
+                <h3 className="text-base font-medium text-gray-700 truncate">
                   {item.product_name}
                 </h3>
                 <p className="text-teal-600 font-semibold mt-1">₹{item.price}</p>

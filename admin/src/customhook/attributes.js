@@ -22,24 +22,28 @@ const useAttributes = () => {
   };
 
   // Create new attribute
-  const createAttribute = async (attributeData) => {
-    try {
-      const res = await axios.post("/api/attributes", attributeData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+const createAttribute = async (attributeData) => {
+  try {
+    const res = await axios.post("/api/attributes", {
+      ...attributeData,
+      attribute_value: JSON.stringify(attributeData.attribute_value),
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      setAttributes((prev) => [...prev, res.data]);
+    setAttributes((prev) => [...prev, res.data]);
 
-      return { success: true };
-    } catch (err) {
-      return {
-        success: false,
-        error: err.response?.data?.message || err.message,
-      };
-    }
-  };
+    return { success: true };
+  } catch (err) {
+    return {
+      success: false,
+      error: err.response?.data?.message || err.message,
+    };
+  }
+};
+
 
   // Update attribute
   const updateAttribute = async (id, attributeData) => {
@@ -80,6 +84,7 @@ const useAttributes = () => {
     attributes,
     loading,
     error,
+    fetchAttributes,
     createAttribute,
     updateAttribute,
     deleteAttribute,

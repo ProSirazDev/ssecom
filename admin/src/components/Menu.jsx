@@ -139,7 +139,7 @@ const Menu = () => {
           {open.customers && (
             <ul className="pl-6 mt-1 space-y-1">
               <li><NavLink to="/customers" className={navLinkClasses}><Users size={16} /> All Customers</NavLink></li>
-              <li><NavLink to="/contacts" className={navLinkClasses}><MessageSquare size={16} /> Contact Messages</NavLink></li>
+              {/* <li><NavLink to="/contacts" className={navLinkClasses}><MessageSquare size={16} /> Contact Messages</NavLink></li> */}
             </ul>
           )}
         </li>
@@ -182,7 +182,7 @@ const Menu = () => {
         </li>
 
         {/* System */}
-        <li>
+        {/* <li>
           <div onClick={() => toggleMenu('system')} className={`${navLinkClasses} justify-between cursor-pointer`}>
             <span className="flex items-center gap-2"><UserCog size={18} /> System</span>
             {open.system ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -194,7 +194,7 @@ const Menu = () => {
               <li><NavLink to="/system/emailsms" className={navLinkClasses}><Mail size={16} /> Email/SMS Settings</NavLink></li>
             </ul>
           )}
-        </li>
+        </li> */}
 
         {/* CMS */}
         <li>
@@ -213,7 +213,7 @@ const Menu = () => {
         </li>
 
         {/* Marketing */}
-        <li>
+        {/* <li>
           <div onClick={() => toggleMenu('marketing')} className={`${navLinkClasses} justify-between cursor-pointer`}>
             <span className="flex items-center gap-2"><Send size={18} /> Marketing</span>
             {open.marketing ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -224,7 +224,7 @@ const Menu = () => {
               <li><NavLink to="/marketing/seo" className={navLinkClasses}><BarChart2 size={16} /> SEO Tools</NavLink></li>
             </ul>
           )}
-        </li>
+        </li> */}
 
         {/* Support */}
         <li>

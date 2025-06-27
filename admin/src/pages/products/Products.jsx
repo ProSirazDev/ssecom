@@ -53,7 +53,7 @@ const Products = () => {
       headerName: "Product",
       filter: true,
       editable: false,
-      flex: 1,
+      flex: 3,
       cellRenderer: (params) => (
         <span
           className="text-blue-500 hover:text-blue-700 cursor-pointer"
@@ -79,7 +79,23 @@ const Products = () => {
     { field: "sku", headerName: "SKU", editable: true, flex: 1 },
     { field: "price", headerName: "Price", editable: true, flex: 1 },
     { field: "status", headerName: "Status", editable: true, flex: 1 },
-    { field: "image", headerName: "Image", editable: true, flex: 1 },
+   {
+  field: "unit_image", // or "image" if that's your actual field name
+  headerName: "Image",
+  editable: false,
+  flex: 1,
+  cellRenderer: (params) =>
+    params.value ? (
+      <img
+        src={params.value}
+        alt="product"
+        className="w-16 h-16 object-cover rounded shadow"
+      />
+    ) : (
+      <span className="text-gray-400">No image</span>
+    ),
+},
+
     {
       field: "action",
       headerName: "Actions",

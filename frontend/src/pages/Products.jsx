@@ -22,7 +22,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`/api/products`, {
+      const res = await axios.get(`server1/api/products`, {
         params: {
           limit,
           offset: (page - 1) * limit,
@@ -92,11 +92,11 @@ const Products = () => {
                 key={product.id}
                 className="bg-white w-full border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 p-4"
               >
-                <div className="sm:h-48 bg-gray-100 mb-4 overflow-hidden">
+                <div className="sm:h-36 bg-gray-100 mb-4 overflow-hidden">
                   <img
                     src={product.unit_image || 'https://via.placeholder.com/200x300'}
                     alt={product.product_name}
-                    className="w-full h-full object-cover object-center"
+                    className="w-full h-full bg-cover bg-center"
                   />
                 </div>
                 <h3 className="text-base font-semibold mb-1 text-gray-900 truncate">

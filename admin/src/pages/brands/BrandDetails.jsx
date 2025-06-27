@@ -1,74 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import SubmitButton from '../../components/ui/SubmitButton';
-import { toast } from 'react-toastify';
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import SubmitButton from "../../components/ui/SubmitButton";
+import Formfield from "../../components/ui/FormField";
+import { toast } from "react-toastify";
 
-const BrandDetails = ({ editData, refresh,updateBrand }) => {
-  const [brand, setBrand] = useState({
-    brand_name: '',
-    description: '',
-    image: '',
-  });
-
-  
+const BrandDetails = ({ editData, refresh, updateBrand }) => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   useEffect(() => {
     if (editData) {
-      setBrand(editData); // Pre-fill the form with selected row data
+      setValue("brand_name", editData.brand_name || "");
+      setValue("description", editData.description || "");
+      setValue("image", editData.image || "");
     }
-  }, [editData]);
+  }, [editData, setValue]);
 
-  const handleChange = (e) => {
-    setBrand({ ...brand, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can call an update API here if not already handled via AgGrid
-    console.log("Updated Brand:", brand);
-     updateBrand(brand.id, brand);
-     toast.success("Updated Successfully")
-    refresh(); // Close drawer and refresh parent
+  const onSubmit = async (data) => {
+    try {
+      const updatedData = { ...editData, ...data };
+      await updateBrand(updatedData.id, updatedData);
+      toast.success("Brand updated successfully");
+      refresh();
+    } catch (error) {
+      console.error("Update failed:", error);
+      toast.error("Failed to update brand");
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="px-4">
-     
+    <form onSubmit={handleSubmit(onSubmit)} className="p-3">
+      <Formfield
+        label="Brand Name"
+        id="brand_name"
+        register={register}
+        errors={errors}
+        placeholder="Enter brand name"
+      />
 
-      <div className="mb-3">
-        <label className="block text-sm">Brand Name</label>
-        <input
-          type="text"
-          name="brand_name"
-          value={brand.brand_name}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-        />
-      </div>
+      <Formfield
+        label="Description"
+        id="description"
+        type="textarea"
+        register={register}
+        errors={errors}
+        placeholder="Enter description"
+        rows={1}
+      />
 
-      <div className="mb-3">
-        <label className="block text-sm">Description</label>
-        <input
-          type="text"
-          name="description"
-          value={brand.description}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-        />
-      </div>
+      <Formfield
+        label="Image URL"
+        id="image"
+        register={register}
+        errors={errors}
+        placeholder="Enter image URL"
+      />
 
-      <div className="mb-3">
-        <label className="block text-sm">Image</label>
-        <input
-          type="text"
-          name="image"
-          value={brand.image}
-          onChange={handleChange}
-          className="w-full border px-3 py-2 rounded"
-        />
-      </div>
-
-
-      <SubmitButton >Update</SubmitButton>
+      <SubmitButton isLoading={isSubmitting}>Update</SubmitButton>
     </form>
   );
 };

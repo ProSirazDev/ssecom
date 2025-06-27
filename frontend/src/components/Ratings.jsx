@@ -54,7 +54,7 @@ const Ratings = ({ productId }) => {
         comment,
       });
 
-      toast.success("Review submitted!");
+      toast.success("Review submitted! Thank You");
       fetchReviews();
       fetchRatingSummary();
       setFormData({ rating: 0, comment: "" });

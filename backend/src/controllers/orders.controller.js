@@ -63,7 +63,24 @@ export const placeOrder = async (req, res) => {
 export const getOrder = async (req, res) => {
   const client = await pool.connect();
   try {
-    const orderResult = await client.query(`SELECT * FROM orders`);
+    const orderResult = await client.query(`SELECT 
+  orders.id,
+  orders.order_id,
+  orders.customer_id,
+  users.firstname || ' ' || users.lastname AS customer_name,
+  orders.total_amount,
+  orders.payment_method,
+  orders.payment_status,
+  orders.order_status,
+  orders.shipping_address,
+  orders.address_id,
+  
+  TO_CHAR(orders.cdate, 'DD-MM-YYYY HH24:MI') AS cdate,
+  TO_CHAR(orders.udate, 'DD-MM-YYYY HH24:MI') AS udate
+FROM orders
+JOIN users ON orders.customer_id = users.usid
+ORDER BY orders.udate DESC;
+`);
 
     res.json({
       orders: orderResult.rows,
@@ -81,17 +98,18 @@ export const updateOrder = async (req, res) => {
   const client = await pool.connect();
   try {
     const { id } = req.params;
-    const { payment_method, payment_status, shipping_address } = req.body;
-
-    const result = await client.query(
-      `UPDATE orders
-       SET payment_method = COALESCE($1, payment_method),
-           payment_status = COALESCE($2, payment_status),
-           shipping_address = COALESCE($3, shipping_address)
-       WHERE id = $4
-       RETURNING *`,
-      [payment_method, payment_status, shipping_address, id]
-    );
+    const { payment_method, payment_status, order_status, shipping_address } = req.body;
+const result = await client.query(
+  `UPDATE orders
+   SET payment_method = COALESCE($1, payment_method),
+       payment_status = COALESCE($2, payment_status),
+       order_status = COALESCE($3, order_status),
+       shipping_address = COALESCE($4, shipping_address),
+      udate = NOW() AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata'
+   WHERE id::uuid = $5
+   RETURNING *`,
+  [payment_method, payment_status, order_status, shipping_address, id]
+);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Order not found' });
@@ -105,6 +123,7 @@ export const updateOrder = async (req, res) => {
     client.release();
   }
 };
+
 
 // export const getOrdersByCustomer = async (req, res) => {
 //   const client = await pool.connect();
@@ -203,5 +222,89 @@ ORDER BY
   } catch (err) {
     console.error('Error fetching orders:', err);
     res.status(500).json({ error: 'Failed to fetch orders' });
+  }
+};
+
+
+
+
+export const getOrderDetailsById = async (req, res) => {
+  const { orderid } = req.params;
+
+  try {
+    const query = `
+      SELECT 
+        orders.id AS id,
+        orders.order_id AS orderid,
+        orders.payment_method,
+        orders.cdate AS order_date,
+        orders.order_status,
+        orders.customer_id,
+        orders.total_amount,
+        orders.payment_status,
+        orders.shipping_address,
+
+        stores.store_name,
+        stores.phone AS store_phone,
+        stores.email AS store_email,
+        stores.address AS store_address,
+        stores.city AS store_city,
+        stores.state AS store_state,
+        stores.country AS store_country,
+
+        order_items.id AS order_item_id,
+        order_items.product_id,
+        order_items.quantity,
+        order_items.unit_price,
+        products.product_name
+
+      FROM orders
+      JOIN order_items ON orders.id = order_items.order_id
+      JOIN stores ON orders.store_id = stores.id
+     JOIN products ON order_items.product_id = products.id 
+
+
+      WHERE orders.id = $1 ORDER BY orders.udate ASC
+    `;
+
+    const result = await pool.query(query, [orderid]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Extract order-level info from the first row
+    const orderInfo = {
+      id: result.rows[0].id,
+      order_id: result.rows[0].orderid,
+      payment_method: result.rows[0].payment_method,
+      order_date: result.rows[0].order_date,
+      order_status: result.rows[0].order_status,
+      customer_id: result.rows[0].customer_id,
+      total_amount: result.rows[0].total_amount,
+      payment_status: result.rows[0].payment_status,
+      shipping_address: result.rows[0].shipping_address,
+      store: {
+        store_name: result.rows[0].store_name,
+        phone: result.rows[0].store_phone,
+        email: result.rows[0].store_email,
+        address: result.rows[0].store_address,
+        city: result.rows[0].store_city,
+        state: result.rows[0].store_state,
+        country: result.rows[0].store_country,
+      },
+      items: result.rows.map(row => ({
+        order_item_id: row.order_item_id,
+        product_id: row.product_id,
+        product_name: row.product_name,
+        quantity: row.quantity,
+        unit_price: row.unit_price,
+      })),
+    };
+
+    res.json(orderInfo);
+  } catch (err) {
+    console.error("Error fetching order details:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

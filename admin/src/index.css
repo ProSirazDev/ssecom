@@ -39,6 +39,7 @@
   box-shadow: none !important;
   background-image: none !important;
   outline: none !important;
+  border: none !important;
 }
 
 /* Optional: Remove border from the entire header row */

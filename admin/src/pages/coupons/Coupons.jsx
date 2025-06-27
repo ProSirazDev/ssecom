@@ -1,57 +1,53 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-
-import Header from "../../components/ui/Header";
 import DrawerButton from "../../components/ui/DrawerButton";
-import Drawer from "../../components/ui/Drawer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Download } from "lucide-react";
-import { toast } from "react-toastify";
+import Header from "../../components/ui/Header";
 
-import useCategories from "../../customhook/categories";
 
 import handleExportCsv from "../../utils/CommonFunctions";
-import AddCategories from "./AddCategories";
-import CategoriesDetail from "./CategoriesDetail";
+import { Download } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
-const Categories = () => {
+import Drawer from "../../components/ui/Drawer";
+import AddCoupons from "./AddCoupons";
+import CouponsDetails from "./CouponsDetails";
+import useCoupons from "../../customhook/coupon";
+
+const Coupons = () => {
   const gridRef = useRef();
-  const {
-    categories,
-    updateCategory,
-    deleteCategory,
-    fetchCategories,
-    loading,
-  } = useCategories();
+  const { coupons, updateCoupon, deleteCoupon, fetchCoupons, loading } =
+    useCoupons();
 
   const [selectedRow, setSelectedRow] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null);
 
   useEffect(() => {
-    if (gridRef.current?.api) {
-      loading
-        ? gridRef.current.api.showLoadingOverlay()
-        : gridRef.current.api.hideOverlay();
+    if (gridRef.current && gridRef.current.api) {
+      if (loading) {
+        gridRef.current.api.showLoadingOverlay();
+      } else {
+        gridRef.current.api.hideOverlay();
+      }
     }
   }, [loading]);
 
   const handleCellEdit = useCallback(
     async (params) => {
       const { data } = params;
-      await updateCategory(data.id, data);
-      toast.success("Updated Successfully");
+      await updateCoupon(data.id, data);
+      toast.success("Coupon updated");
     },
-    [updateCategory]
+    [updateCoupon]
   );
 
   const colDefs = [
     {
-      field: "category_name",
-      headerName: "Category",
-      filter: true,
+      field: "coupon_code",
+      headerName: "Coupon Code",
       editable: false,
       flex: 1,
       cellRenderer: (params) => (
@@ -60,13 +56,13 @@ const Categories = () => {
           onClick={() => {
             setSelectedRow(params.data);
             setDrawerContent(
-              <CategoriesDetail
+              <CouponsDetails
                 editData={params.data}
                 refresh={() => {
-                  fetchCategories();
+                  fetchCoupons();
                   setDrawerOpen(false);
                 }}
-                updateCategory={updateCategory}
+                updateCoupon={updateCoupon}
               />
             );
             setDrawerOpen(true);
@@ -76,39 +72,48 @@ const Categories = () => {
         </span>
       ),
     },
+    { field: "discount_type", headerName: "Type", flex: 1, editable: true },
     {
-  field: "image", // or "image" if that's your actual field name
-  headerName: "Image",
-  editable: false,
-  flex: 1,
-  cellRenderer: (params) =>
-    params.value ? (
-      <img
-        src={params.value}
-        alt="product"
-        className="w-16 h-16 object-cover rounded shadow"
-      />
-    ) : (
-      <span className="text-gray-400">No image</span>
-    ),
-},
-    {
-      field: "parent_id",
-      headerName: "Parent",
-      editable: true,
+      field: "discount_value",
+      headerName: "Value",
       flex: 1,
+      editable: true,
     },
     {
-      field: "status",
-      headerName: "Status",
-      editable: true,
+      field: "max_discount",
+      headerName: "Max Discount",
       flex: 1,
+      editable: true,
     },
     {
-      field: "sortorder",
-      headerName: "Sort Order",
-      editable: true,
+      field: "minimum_order_value",
+      headerName: "Min Order",
       flex: 1,
+      editable: true,
+    },
+    {
+      field: "valid_from",
+      headerName: "Valid From",
+      flex: 1,
+      editable: false,
+    },
+    {
+      field: "valid_to",
+      headerName: "Valid To",
+      flex: 1,
+      editable: false,
+    },
+    {
+      field: "is_active",
+      headerName: "Active",
+      flex: 1,
+      editable: true,
+      cellRenderer: (params) =>
+        params.value ? (
+          <span className="text-green-600 font-semibold">Yes</span>
+        ) : (
+          <span className="text-red-500">No</span>
+        ),
     },
     {
       field: "action",
@@ -118,13 +123,13 @@ const Categories = () => {
         <div className="flex justify-center gap-8">
           <button
             className="text-blue-500 hover:text-blue-700"
-            onClick={() => updateCategory(params.data.id, params.data)}
+            onClick={() => updateCoupon(params.data.id, params.data)}
           >
-            <FontAwesomeIcon icon={faSave} className="w-4 h-4" />
+            <FontAwesomeIcon icon={faSave} />
           </button>
           <button
             className="text-red-500 hover:text-red-700"
-            onClick={() => deleteCategory(params.data.id)}
+            onClick={() => deleteCoupon(params.data.id)}
           >
             <FontAwesomeIcon icon={faTrash} />
           </button>
@@ -135,44 +140,38 @@ const Categories = () => {
 
   return (
     <div>
-      {/* Header */}
-      <Header name="Categories">
+      <Header name="Coupons">
         <DrawerButton
-          name="Add Category"
-          component={<AddCategories refresh={fetchCategories} />}
+          name="Add Coupon"
+          component={<AddCoupons refresh={fetchCoupons} />}
         />
       </Header>
 
-      {/* Export */}
       <div className="w-full flex justify-end mt-3">
         <button
-          onClick={() => handleExportCsv(gridRef, "Categories")}
-          className="global-export-btn mr-5 flex items-center gap-x-2"
+          onClick={() => handleExportCsv(gridRef, "Coupons")}
+          className="global-export-btn mr-5 flex items-center justify-center gap-x-2"
         >
-          Export Data
-          <Download size={16} />
+          Export Data <Download size={16} />
         </button>
       </div>
 
-      {/* AG Grid */}
       <div className="ag-theme-quartz mx-3 pb-3" style={{ height: "540px" }}>
         <AgGridReact
           ref={gridRef}
-          rowData={categories}
+          rowData={coupons}
           columnDefs={colDefs}
           pagination={true}
           onCellValueChanged={handleCellEdit}
           animateRows={true}
-          paginationPageSize={10}
         />
       </div>
 
-      {/* Drawer for Details */}
       {selectedRow && (
         <Drawer
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
-          title={selectedRow.category_name}
+          title={selectedRow.coupon_code}
         >
           {drawerContent}
         </Drawer>
@@ -181,4 +180,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Coupons;

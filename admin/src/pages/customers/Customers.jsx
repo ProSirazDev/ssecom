@@ -1,72 +1,103 @@
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
+import axios from "axios";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-
 import Header from "../../components/ui/Header";
 import DrawerButton from "../../components/ui/DrawerButton";
 import Drawer from "../../components/ui/Drawer";
+import { Download } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Download } from "lucide-react";
+import handleExportCsv from "../../utils/CommonFunctions";
 import { toast } from "react-toastify";
 
-import useCategories from "../../customhook/categories";
 
-import handleExportCsv from "../../utils/CommonFunctions";
-import AddCategories from "./AddCategories";
-import CategoriesDetail from "./CategoriesDetail";
 
-const Categories = () => {
+import AddCustomers from "./AddCustomers";
+import CustomersDetails from "./CustomersDetails";
+
+const Customers = () => {
   const gridRef = useRef();
-  const {
-    categories,
-    updateCategory,
-    deleteCategory,
-    fetchCategories,
-    loading,
-  } = useCategories();
-
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null);
 
+  // Fetch customers from API
+  const fetchCustomers = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("/api/customers");
+      setCustomers(res.data);
+    } catch (err) {
+      toast.error("Failed to fetch customers");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (gridRef.current?.api) {
+    fetchCustomers();
+  }, []);
+
+  useEffect(() => {
+    if (gridRef.current && gridRef.current.api) {
       loading
         ? gridRef.current.api.showLoadingOverlay()
         : gridRef.current.api.hideOverlay();
     }
   }, [loading]);
 
+  // Update customer
+  const updateCustomer = async (id, data) => {
+    try {
+      await axios.put(`/api/customers/${id}`, data);
+      toast.success("Customer updated successfully");
+    } catch (err) {
+      toast.error("Failed to update customer");
+    }
+  };
+
+  // Delete customer
+  const deleteCustomer = async (id) => {
+    try {
+      await axios.delete(`/api/customers/${id}`);
+      toast.success("Customer deleted");
+      fetchCustomers();
+    } catch (err) {
+      toast.error("Failed to delete customer");
+    }
+  };
+
   const handleCellEdit = useCallback(
     async (params) => {
       const { data } = params;
-      await updateCategory(data.id, data);
-      toast.success("Updated Successfully");
+      await updateCustomer(data.id, data);
     },
-    [updateCategory]
+    []
   );
 
   const colDefs = [
     {
-      field: "category_name",
-      headerName: "Category",
+      field: "name",
+      headerName: "Name",
       filter: true,
       editable: false,
       flex: 1,
       cellRenderer: (params) => (
         <span
-          className="text-blue-500 hover:text-blue-700 cursor-pointer"
+          className="text-blue-600 hover:underline cursor-pointer"
           onClick={() => {
             setSelectedRow(params.data);
             setDrawerContent(
-              <CategoriesDetail
+              <CustomersDetails
                 editData={params.data}
                 refresh={() => {
-                  fetchCategories();
+                  fetchCustomers();
                   setDrawerOpen(false);
                 }}
-                updateCategory={updateCategory}
+                updateCustomer={updateCustomer}
               />
             );
             setDrawerOpen(true);
@@ -77,38 +108,23 @@ const Categories = () => {
       ),
     },
     {
-  field: "image", // or "image" if that's your actual field name
-  headerName: "Image",
-  editable: false,
-  flex: 1,
-  cellRenderer: (params) =>
-    params.value ? (
-      <img
-        src={params.value}
-        alt="product"
-        className="w-16 h-16 object-cover rounded shadow"
-      />
-    ) : (
-      <span className="text-gray-400">No image</span>
-    ),
-},
+      field: "email",
+      headerName: "Email",
+      editable: true,
+      flex: 1,
+    },
     {
-      field: "parent_id",
-      headerName: "Parent",
+      field: "mobile",
+      headerName: "Phone",
       editable: true,
       flex: 1,
     },
     {
       field: "status",
       headerName: "Status",
-      editable: true,
+      editable: false,
       flex: 1,
-    },
-    {
-      field: "sortorder",
-      headerName: "Sort Order",
-      editable: true,
-      flex: 1,
+     
     },
     {
       field: "action",
@@ -118,13 +134,13 @@ const Categories = () => {
         <div className="flex justify-center gap-8">
           <button
             className="text-blue-500 hover:text-blue-700"
-            onClick={() => updateCategory(params.data.id, params.data)}
+            onClick={() => updateCustomer(params.data.id, params.data)}
           >
-            <FontAwesomeIcon icon={faSave} className="w-4 h-4" />
+            <FontAwesomeIcon icon={faSave} />
           </button>
           <button
             className="text-red-500 hover:text-red-700"
-            onClick={() => deleteCategory(params.data.id)}
+            onClick={() => deleteCustomer(params.data.id)}
           >
             <FontAwesomeIcon icon={faTrash} />
           </button>
@@ -136,18 +152,18 @@ const Categories = () => {
   return (
     <div>
       {/* Header */}
-      <Header name="Categories">
+      <Header name="Customers">
         <DrawerButton
-          name="Add Category"
-          component={<AddCategories refresh={fetchCategories} />}
+          name="Add Customer"
+          component={<AddCustomers refresh={fetchCustomers} />}
         />
       </Header>
 
-      {/* Export */}
+      {/* Export Button */}
       <div className="w-full flex justify-end mt-3">
         <button
-          onClick={() => handleExportCsv(gridRef, "Categories")}
-          className="global-export-btn mr-5 flex items-center gap-x-2"
+          onClick={() => handleExportCsv(gridRef, "Customers")}
+          className="global-export-btn mr-5 flex items-center gap-2"
         >
           Export Data
           <Download size={16} />
@@ -158,21 +174,21 @@ const Categories = () => {
       <div className="ag-theme-quartz mx-3 pb-3" style={{ height: "540px" }}>
         <AgGridReact
           ref={gridRef}
-          rowData={categories}
+          rowData={customers}
           columnDefs={colDefs}
           pagination={true}
-          onCellValueChanged={handleCellEdit}
-          animateRows={true}
           paginationPageSize={10}
+          animateRows={true}
+          onCellValueChanged={handleCellEdit}
         />
       </div>
 
-      {/* Drawer for Details */}
+      {/* Drawer */}
       {selectedRow && (
         <Drawer
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
-          title={selectedRow.category_name}
+          title={selectedRow.name}
         >
           {drawerContent}
         </Drawer>
@@ -181,4 +197,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Customers;

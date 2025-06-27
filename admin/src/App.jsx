@@ -16,6 +16,8 @@ import Heightclass from './pages/heightclass/Heightclass';
 import LengthClass from './pages/lengthclass/LengthClass';
 import Attribute from './pages/attribute/Attribute';
 import Orders from './pages/orders/Orders';
+import Coupons from './pages/coupons/Coupons';
+import Customers from './pages/customers/Customers';
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -49,6 +51,8 @@ transition={Bounce}
             <Route path="weight-class" element={<Weightclass/>} />
             <Route path="height-class" element={<Heightclass/>} />
             <Route path="length-class" element={<LengthClass/>} />
+              <Route path="coupons" element={<Coupons/>} />
+                          <Route path="customers" element={<Customers/>} />
           <Route path="*" element={<Notfound/>} />
         </Route>
       </Routes>

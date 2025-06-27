@@ -78,7 +78,22 @@ useEffect(() => {
       editable: true,
       flex: 1,
     },
-    { field: "image", headerName: "Image", editable: true, flex: 1 },
+ {
+  field: "image", // or "image" if that's your actual field name
+  headerName: "Image",
+  editable: false,
+  flex: 1,
+  cellRenderer: (params) =>
+    params.value ? (
+      <img
+        src={params.value}
+        alt="product"
+        className="w-16 h-16 object-cover rounded shadow"
+      />
+    ) : (
+      <span className="text-gray-400">No image</span>
+    ),
+},
     {
       field: "action",
       headerName: "Actions",
@@ -132,6 +147,7 @@ useEffect(() => {
           pagination={true}
           onCellValueChanged={handleCellEdit}
           animateRows={true}
+          paginationPageSize={10}
         />
       </div>
 

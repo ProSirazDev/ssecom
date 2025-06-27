@@ -35,13 +35,34 @@ console.log(orders,"orders");
     }
   };
 
+    const fetchOrderByorderId = async (orderid) => {
+    try {
+      const res = await axios.get(`/api/orders/details/${orderid}`);
+      return { success: true, order: res.data };
+    } catch (err) {
+      return {
+        success: false,
+        error: err.response?.data?.message || err.message,
+      };
+    }
+  };
+
+
   // Update an order
   const updateOrder = async (id, orderData) => {
     try {
       const res = await axios.put(`/api/orders/${id}`, orderData);
-      setOrders((prev) =>
-        prev.map((order) => (order.id === id ? { ...order, ...res.data.order } : order))
-      );
+     setOrders((prev) => {
+  if (!Array.isArray(prev.orders)) return prev;
+
+  return {
+    ...prev,
+    orders: prev.orders.map((order) =>
+      order.id === id ? { ...order, ...res.data.order } : order
+    ),
+  };
+});
+
       toast.success("Order updated successfully");
       return { success: true };
     } catch (err) {
@@ -63,6 +84,7 @@ console.log(orders,"orders");
     error,
     fetchOrders,
     fetchOrderById,
+    fetchOrderByorderId,
     updateOrder,
   };
 };

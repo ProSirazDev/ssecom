@@ -66,7 +66,7 @@ const AddBrands = ({ refresh }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="">
       <Formfield
         label="Brand Name"
         id="brand_name"
@@ -86,13 +86,16 @@ const AddBrands = ({ refresh }) => {
       />
 
       <div className="space-y-1">
-        <label htmlFor="image" className="block font-medium">Image</label>
-        <input
+        {/* <label htmlFor="image" className="block font-medium">Image</label> */}
+        <Formfield
           type="file"
+           label="Description"
           id="image"
+          register={register}
+        errors={errors}
           accept="image/*"
           onChange={handleImageChange}
-          className="border px-2 py-1 rounded w-full"
+          className="border border-gray-300 px-2 py-1  w-full"
         />
       </div>
 

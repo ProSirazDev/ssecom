@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 
 import Drawer from "../../components/ui/Drawer";
 import useOrders from "../../customhook/orders";
+import OrderDetails from "./OrderDetails";
 
 
 const Orders = () => {
@@ -37,6 +38,8 @@ const Orders = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerContent, setDrawerContent] = useState(null);
+  console.log("selectedRow", selectedRow);
+  
 
   const handleCellEdit = useCallback(
     async (params) => {
@@ -49,9 +52,61 @@ const Orders = () => {
   );
 
   const colDefs = [
-    { field: "order_id", headerName: "Order ID", flex: 1 },
-    { field: "customer_id", headerName: "Customer", editable: true, flex: 1 },
-    { field: "order_status", headerName: "Status", editable: true, flex: 1 },
+   {
+      field: "order_id",
+      headerName: "Order ID",
+      editable: false,
+       filter: true,
+      flex: 2,
+    cellRenderer: (params) => (
+  <span
+    className="text-blue-500 hover:text-blue-700 cursor-pointer"
+    onClick={() => {
+      setSelectedRow(params.data);
+      setDrawerContent(
+        <OrderDetails
+          orderdata={params.data}
+           // ✅ DIRECTLY from params, not from selectedRow
+          refresh={() => setDrawerOpen(false)}
+        />
+      );
+      setDrawerOpen(true);
+    }}
+  >
+    {params.value}
+  </span>
+),
+
+    },
+    { field: "customer_name", headerName: "Customer", editable: true, flex: 1 },
+{
+  field: "order_status",
+  headerName: "Status",
+  editable: true,
+  flex: 1,
+  cellRenderer: (params) => {
+    const status = params.value?.toLowerCase();
+
+    const colorMap = {
+      pending: "text-yellow-500",
+      shipped: "text-blue-600",
+      delivered: "text-green-500",
+      cancelled: "text-red-600",
+      returned: "text-purple-600",
+      processing: "text-orange-600",
+    };
+
+    const colorClass = colorMap[status] || "text-gray-600";
+
+   return (
+  <span className={`${colorClass} font-semibold`}>
+    {params.value}
+  </span>
+);
+
+  },
+}
+,
     { field: "total_amount", headerName: "Total", editable: false, flex: 1 },
      { field: "payment_method", headerName: "Payment Method", editable: false, flex: 1 },
       { field: "payment_status", headerName: "Payment Status", editable: false, flex: 1 },
@@ -95,7 +150,7 @@ const Orders = () => {
           rowData={orders.orders}
           columnDefs={colDefs}
           pagination={true}
-          paginationPageSize={9}
+          paginationPageSize={10}
           onCellValueChanged={handleCellEdit}
           animateRows={true}
         />
@@ -106,7 +161,7 @@ const Orders = () => {
         <Drawer
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
-          title={`Order #${selectedRow.id}`}
+          title={`${selectedRow.id}`}
         >
           {drawerContent}
         </Drawer>

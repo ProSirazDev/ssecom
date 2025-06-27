@@ -14,6 +14,7 @@ import useAttributes from "../../customhook/attributes";
 
 import Drawer from "../../components/ui/Drawer";
 import AddAttribute from "./AddAttribute";
+import AttributeDetails from "./AttributeDetails";
 
 const Attributes = () => {
   const gridRef = useRef();

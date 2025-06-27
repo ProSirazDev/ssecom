@@ -171,12 +171,12 @@ const AddProduct = ({ onCreate }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto border border-gray-300 p-4 rounded-md">
       <Tab.Group>
-        <Tab.List className="flex space-x-2 mb-4 bg-gray-100 rounded-md p-1">
+        <Tab.List className="flex space-x-2 mb-4 bg-gray-100  p-1">
           {['Basic Info', 'Inventory & Pricing', 'Dimensions & Weight', 'Shipping & Availability', 'Media & Others', 'Options'].map((tab) => (
             <Tab
               key={tab}
               className={({ selected }) =>
-                `w-full py-2 text-sm font-medium rounded-md transition ${
+                `w-full py-2 text-sm font-medium transition ${
                   selected ? 'bg-white shadow text-blue-600' : 'text-gray-500 hover:text-blue-500'
                 }`
               }
@@ -188,7 +188,7 @@ const AddProduct = ({ onCreate }) => {
 
         <Tab.Panels className="mt-4">
           {/* --- BASIC INFO --- */}
-          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2">
             <Formfield 
               label="Product Name" 
               id="product_name" 
@@ -204,7 +204,7 @@ const AddProduct = ({ onCreate }) => {
               register={register} 
               errors={errors} 
               placeholder="Enter product description"
-              rows={3}
+              rows={1}
             />
                       <div className="col-span-2">
   {/* <label className="block mb-1 font-medium text-gray-700">Long Description</label> */}
@@ -254,7 +254,7 @@ const AddProduct = ({ onCreate }) => {
           </Tab.Panel>
 
           {/* --- INVENTORY & PRICING --- */}
-          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 ">
             <Formfield 
               label="Barcode" 
               id="barcode" 
@@ -293,7 +293,7 @@ const AddProduct = ({ onCreate }) => {
               register={register} 
               errors={errors} 
               placeholder="Enter discount structure"
-              rows={2}
+              rows={1}
             />
             <Formfield 
               label="In Stock" 
@@ -365,7 +365,7 @@ const AddProduct = ({ onCreate }) => {
           </Tab.Panel>
 
           {/* --- DIMENSIONS & WEIGHT --- */}
-          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 ">
             <Formfield 
               label="Length Class" 
               type="select" 
@@ -438,7 +438,7 @@ const AddProduct = ({ onCreate }) => {
           </Tab.Panel>
 
           {/* --- SHIPPING & AVAILABILITY --- */}
-          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 ">
             <Formfield 
               label="Shipping" 
               id="shipping" 
@@ -483,7 +483,7 @@ const AddProduct = ({ onCreate }) => {
           </Tab.Panel>
 
           {/* --- MEDIA & OTHERS --- */}
-          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Tab.Panel className="grid grid-cols-1 md:grid-cols-2 ">
             <Formfield 
               label="Tag" 
               id="tag" 
@@ -539,7 +539,7 @@ const AddProduct = ({ onCreate }) => {
 
           {/* --- OPTIONS --- */}
           <Tab.Panel className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-12 ">
               <select
                 value={optionForm.color}
                 onChange={(e) => setOptionForm({ ...optionForm, color: e.target.value })}

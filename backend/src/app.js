@@ -16,6 +16,7 @@ import addressRoutes from '../src/routes/address.routes.js'; // ✅ FIXED: added
 import metricsRoute from './routes/metrics.route.js';
 import couponRoutes from './routes/coupon.routes.js'
 import customersRoute from './routes/customers.routes.js'
+import dashboardRoute from './routes/dashboard.routes.js'
 import { httpRequestCounter } from './metrics/metrics.js';
 
 
@@ -56,6 +57,7 @@ app.use('/api/address', addressRoutes);
 app.use('/api/coupons', couponRoutes);
 app.use('/metrics', metricsRoute);
 app.use('/api/customers', customersRoute);
+app.use('/api/dashboard', dashboardRoute);
 
 
 export default app;

@@ -168,3 +168,60 @@ export const logoutUser = (req, res) => {
   return res.status(200).json({ message: 'Logged out successfully' });
 };
 
+export const adminLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const client = await pool.connect();
+
+  try {
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password required' });
+    }
+
+    const result = await client.query(
+      `SELECT * FROM users WHERE email = $1 AND role_id = '2aa6bcd9-597e-4563-ac01-4f7048cb8f11' AND status = 'true' LIMIT 1`,
+      [email]
+    );
+
+    const admin = result.rows[0];
+
+    if (!admin) {
+      return res.status(401).json({ error: 'Invalid credentials or not an admin' });
+    }
+
+    const validPassword = await bcrypt.compare(password, admin.password);
+
+    if (!validPassword) {
+      return res.status(401).json({ error: 'Invalid password' });
+    }
+
+    // Generate JWT token
+  const token = jwt.sign(
+  {
+    usid: admin.usid,
+    email: admin.email,
+    firstname: admin.firstname,
+    lastname: admin.lastname,
+    name: `${admin.firstname} ${admin.lastname}`, // helpful for display
+    role: 'admin'
+  },
+  process.env.JWT_SECRET,
+  { expiresIn: '1d' }
+);
+
+    res.status(200).json({
+      message: 'Admin login successful',
+      token,
+      admin: {
+        usid: admin.usid,
+        email: admin.email,
+        name: `${admin.firstname} ${admin.lastname}`,
+        role: admin.role_id,
+      },
+    });
+  } catch (err) {
+    console.error('Admin login failed:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  } finally {
+    client.release();
+  }
+};

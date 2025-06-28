@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-import axios from "axios";
+import axios from '../utils/axiosInstance';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import Header from "../../components/ui/Header";

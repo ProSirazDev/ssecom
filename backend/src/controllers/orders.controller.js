@@ -24,7 +24,7 @@ export const placeOrder = async (req, res) => {
     const generateOrderId = () => {
   return 'ORD-' + Date.now(); // Example: ORD-1716806785123
 };
-
+const store_id='68ab9085-2a4b-449f-9ab0-217d746e06b8'
     const order_id= generateOrderId();
     const total_amount = cartItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -34,9 +34,9 @@ export const placeOrder = async (req, res) => {
     await client.query('BEGIN');
 
     await client.query(
-      `INSERT INTO orders (id, customer_id, total_amount, payment_method, payment_status,order_status, shipping_address,address_id,order_id)
-       VALUES ($1, $2, $3, $4, $5, $6,$7,$8,$9)`,
-      [orderId, customer_id, total_amount, payment_method, payment_status,order_status, shipping_address,address_id,order_id]
+      `INSERT INTO orders (id, customer_id, total_amount, payment_method, payment_status,order_status, shipping_address,address_id,order_id,store_id)
+       VALUES ($1, $2, $3, $4, $5, $6,$7,$8,$9,$10)`,
+      [orderId, customer_id, total_amount, payment_method, payment_status,order_status, shipping_address,address_id,order_id,store_id]
     );
 
     for (const item of cartItems) {

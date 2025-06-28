@@ -22,7 +22,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`server1/api/products`, {
+      const res = await axios.get(`/api/products`, {
         params: {
           limit,
           offset: (page - 1) * limit,

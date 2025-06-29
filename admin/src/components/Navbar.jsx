@@ -3,20 +3,23 @@ import { LogOut, User } from 'lucide-react';
 import logo from '../assets/logo.png';
 import {jwtDecode} from 'jwt-decode';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [username, setUsername] = useState('');
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
+    
     if (token) {
       try {
         const decoded = jwtDecode(token); // decode the JWT
-        const { email,name } = decoded;
+        const { email, name } = decoded;
 
         // Optional: If you include name or firstname/lastname in token
-        const decodename = decoded.name || email;
+        const decodename = name || email;
 
         setUsername(decodename);
       } catch (err) {
@@ -31,13 +34,14 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    navigate('/auth/login');
     toast.success('Logged out successfully');
-    window.location.href = '/auth/login';
+   
   };
 
   return (
     <header className="w-full h-14 bg-emerald-500 shadow fixed top-0 right-0 z-10 flex items-center justify-between px-6">
-      <img src={logo} alt="" className="h-12 w-12 rounded-full bg-white" />
+      <img src='https://res.cloudinary.com/des8x6d4o/image/upload/v1751220354/ssecomlogo_de9nbv.png' alt="" className="h-12 w-12 rounded-full bg-white" />
 
       <nav className="flex gap-4">
         {/* Optional nav links */}

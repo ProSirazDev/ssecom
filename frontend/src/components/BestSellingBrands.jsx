@@ -30,7 +30,7 @@ const BestSellingBrands = () => {
   };
 
   return (
-    <div className="bg-teal-500/10 px-4 sm:px-10 py-10">
+    <div className="bg-white px-4 sm:px-10 py-10">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
         Best Selling Brands
       </h2>
@@ -41,9 +41,9 @@ const BestSellingBrands = () => {
               <img
                 src={`https://picsum.photos/id/${item.id}/400/400`}
                 alt={item.name}
-                className="w-32 h-32 bg-cover bg-center rounded-full mb-4 border-4 border-teal-100"
+                className="w-32 h-32 bg-cover bg-center rounded-full mb-4  "
               />
-              <h3 className="text-sm font-sm text-orange-500">
+              <h3 className="text-sm font-sm text-black">
                 {item.name}
               </h3>
               {/* <p className="text-teal-600 font-bold">{item.price}</p> */}

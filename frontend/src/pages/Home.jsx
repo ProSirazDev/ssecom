@@ -13,7 +13,7 @@ const Home = () => {
   return (<>
 
        <Banner></Banner>
-     <div className="!bg-gray-100 text-gray-800  mx-auto  pb-3">
+     <div className="!bg-gray-100 text-gray-800  mx-auto ">
       {/* <Menu/> */}
    
  <TopCategories />

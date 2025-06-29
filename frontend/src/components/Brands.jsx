@@ -26,7 +26,7 @@ const Brands = () => {
   }, []);
 
   return (
-    <div className=" bg-teal-500/10 p-2 sm:p-10">
+    <div className="  p-2 sm:p-10">
     <img src='https://rukminim2.flixcart.com/fk-p-flap/1620/270/image/fd925b2138ecf9b9.jpeg?q=20' alt='brND' className=' h-36 w-full'/>
       {/* <h2 className="w-fit text-base font-semibold text-white bg-teal-500 px-4 mx-4 py-1 rounded-tr-2xl rounded-bl-2xl mb-6">
         TOP BRANDS 🔥

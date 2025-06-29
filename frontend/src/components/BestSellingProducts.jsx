@@ -36,7 +36,7 @@ const BestSellingProducts = () => {
   };
 
   return (
-    <div className="bg-pink-500/10 px-4 sm:px-10 py-10">
+    <div className=" px-4 sm:px-10 py-10">
       <h2 className="text-xl font-bold mb-6 text-center text-gray-800">
         Best Selling Products
       </h2>
@@ -45,16 +45,17 @@ const BestSellingProducts = () => {
           <div key={item.id} className="px-3">
           <div className='bg-white border border-gray-300 rounded overflow-hidden shadow hover:shadow-lg transition duration-300'>
             <Link to={`/productdetails/${item.id}`} >
-              <img
+            <div className='w-full flex justify-center'>  
+            <img
                 src={item.unit_image || `https://picsum.photos/id/${index + 22}/400/400`}
                 alt={item.name}
-                className="w-full h-40 p-3 object-cover"
-              />
+                className="  p-3 h-40 w-40 bg-cover place-items-center bg-center transition-transform duration-500 group-hover:scale-105"
+              /></div>
               <div className="p-4 text-center">
                 <h3 className="text-base font-medium text-gray-700 truncate">
                   {item.product_name}
                 </h3>
-                <p className="text-teal-600 font-semibold mt-1">₹{item.price}</p>
+                <p className="text-green-500 font-semibold mt-1">₹{item.price}</p>
               </div>
             </Link>
             </div>

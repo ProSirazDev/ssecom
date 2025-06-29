@@ -31,7 +31,7 @@ const features = [
 
 const Whyus = () => {
   return (
-    <div className="py-10 px-4 bg-orange-500/10">
+    <div className="pt-10 px-4 bg-white">
       <h2 className="text-2xl font-bold text-center text-gray-800 mb-8">
         Why Choose Us?
       </h2>

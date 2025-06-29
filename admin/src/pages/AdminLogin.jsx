@@ -50,9 +50,19 @@ const AdminLogin = () => {
       {/* Right Side Login */}
       <div className="w-1/2 h-full flex items-center justify-center bg-gray-50">
         <div className="   w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-            Admin Login
-          </h2>
+          <div className="mb-8 text-center">
+          
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <img
+                src="https://res.cloudinary.com/des8x6d4o/image/upload/v1751220354/ssecomlogo_de9nbv.png"
+                alt="logo"
+                className="w-10 h-10"
+              />
+                <p className="text-teal-600 text-2xl font-medium">DIGISHOP</p>
+                
+            </div>
+      
+          </div>
 
           {error && <p className="text-red-600 mb-4 text-sm">{error}</p>}
 
@@ -90,7 +100,7 @@ const AdminLogin = () => {
               disabled={loading}
               className="w-full bg-teal-500 text-white py-2 rounded hover:bg-teal-600 transition"
             >
-              {loading ? 'Logging in...' : 'Login as Admin'}
+              {loading ? 'Logging in...' : 'Login '}
             </button>
           </form>
         </div>

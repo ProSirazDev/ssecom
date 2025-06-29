@@ -102,7 +102,7 @@ const DealsandOffer = () => {
   }, []);
 
   return (
-    <div className=" py-10 bg-teal-500/10   mx-auto">
+    <div className=" py-10    mx-auto">
       {/* <h2 className="text-2xl font-bold mb-6 text-indigo-700">🔥 Deals & Offers</h2> */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6">
         {/* Countdown Timer */}
@@ -125,7 +125,7 @@ const DealsandOffer = () => {
               />
               <h4 className="font-sm text-sm text-gray-800 mb-1 whitespace-nowrap overflow-hidden">{product.name}</h4>
               <div className="text-sm text-gray-600 mb-2">
-                <span className="text-black font-bold">Rs {product.price.toFixed(2)}</span>
+                <span className="text-green-500 font-bold">Rs {product.price.toFixed(2)}</span>
                <span
   className="line-through ml-2"
   style={{ color: product.oldPriceColor || 'gray' }}

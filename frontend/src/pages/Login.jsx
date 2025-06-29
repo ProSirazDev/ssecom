@@ -47,13 +47,19 @@ const Login = () => {
 
       {/* Right Form Section */}
       <div className="p-8 flex items-center justify-center">
-        <div className="w-full max-w-md p-6">
+        <div className="w-full max-w-md p-6 flex flex-col justify-center">
           {/* Logo / Header */}
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-indigo-600">ShopEase</h1>
-            <p className="text-gray-500 mt-1">Sign in with your email</p>
+             <div className="mb-8 text-center">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <img
+                src="https://res.cloudinary.com/des8x6d4o/image/upload/v1751220354/ssecomlogo_de9nbv.png"
+                alt="logo"
+                className="w-10 h-10"
+              />
+                <p className="text-gray-600">Sign in to continue</p>
+            </div>
+         
           </div>
-
           {/* Login Form */}
           <form className="space-y-5" onSubmit={handleLogin}>
             {/* Email Input */}
@@ -94,7 +100,7 @@ const Login = () => {
           {/* Divider */}
           <div className="mt-6 text-center text-sm text-gray-500">
             Don’t have an account?{' '}
-            <Link to="/signup" className="text-teal-500 text-lg font-medium ml-3 hover:text-teal-600 cursor-pointer">Sign Up</Link>
+            <Link to="/signup" className="text-orange-500  text-base font-medium ml-3 hover:text-teal-600 cursor-pointer">Register</Link>
           </div>
         </div>
       </div>

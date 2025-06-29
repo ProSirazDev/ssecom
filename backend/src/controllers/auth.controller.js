@@ -26,8 +26,19 @@ export const registerUser = async (req, res) => {
       cby,
     } = req.body;
 
+    // Check if user already exists by email or mobile
+    const existingUser = await client.query(
+      `SELECT 1 FROM users WHERE email = $1 `,
+      [email]
+    );
+
+    if (existingUser.rowCount > 0) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const usid = uuidv4();
+    const uid = uuidv4(); // Add this since it's used for `customers.id`
     const cdate = new Date();
 
     await client.query('BEGIN');
@@ -41,7 +52,7 @@ export const registerUser = async (req, res) => {
     `;
     const insertUserValues = [
       firstname, middlename, lastname, mobile, email, hashedPassword,
-      role_id, usid, cdate, cby, true  // <-- Boolean, not string
+      role_id, usid, cdate, cby, true
     ];
     await client.query(insertUserText, insertUserValues);
 

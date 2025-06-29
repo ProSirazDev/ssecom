@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from '../utils/axiosInstance';
 import { toast } from "react-toastify";
 import { useCart } from "../globalstate/cartcontext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../globalstate/authcontext";
 import AvailableOffers from "../components/AvailableOffers";
 import CouponOffers from "../components/CouponOffers";
@@ -118,7 +118,11 @@ useEffect(() => {
                 <Loader />
               </div>
             ) : addresses.length === 0 ? (
-              <p>No addresses found.</p>
+              <><p>No addresses found.</p>
+                <Link to="/address" className="text-teal-600 hover:underline">
+                  Go to address page
+                </Link>
+              </>
             ) : (
               <ul className="space-y-4">
                 {addresses.map(addr => (

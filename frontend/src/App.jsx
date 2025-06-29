@@ -28,6 +28,7 @@ import ThankYou from "./pages/ThankYou";
 import MyProfile from "./pages/MyProfile";
 import DeliveryAddress from "./pages/DeliveryAddress";
 import ScrollToTop from "./components/ScrollToTop";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -73,11 +74,12 @@ function App() {
           <Route path="returns" element={<ReturnPolicy />} />
           <Route path="checkout" element={<Checkout />} />
             <Route path="delivery-address" element={<DeliveryAddress />} />
-          <Route path="address/:usid" element={<Address/>} />
+          <Route path="address" element={<Address/>} />
           <Route path="thankyou" element={<ThankYou />} />
             <Route path="my-profile" element={<MyProfile />} >
             </Route>
             <Route path="orders" element={<Orders />} />
+  <Route path="contact" element={<Contact />} />
 
           <Route path="*" element={<Notfound />} />
         </Route>

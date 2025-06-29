@@ -53,7 +53,7 @@ const handleSubmit = async (e) => {
   } catch (err) {
     console.error(err);
     const message = err.response?.data?.message || '❌ Registration failed';
-    toast.error(message, { position: 'top-center' });
+    toast.error(message, { position: 'top-right' });
   }
 };
 
@@ -135,7 +135,8 @@ const handleSubmit = async (e) => {
   >
     Register
   </button>
-  Already have an account? <span className='text-teal-500 ml-4 text-lg font-medium '><Link to='/login'>Signin</Link></span></div>
+  Already have an account? <span className='text-teal-500 ml-4 text-lg font-medium '>
+  <Link to='/login'  className="text-orange-500  text-base font-medium ml-3 hover:text-teal-600 cursor-pointer">Login Now</Link></span></div>
 
       </form>
     </div>

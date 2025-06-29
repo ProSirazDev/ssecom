@@ -14,7 +14,7 @@ const Recommended = () => {
 
   return (
     <div className="  py-10">
-      <div className="flex justify-between items-center px-6 pb-5">
+      <div className="flex justify-between items-center px-3 pb-5">
         <h2 className="text-xl sm:text-xl sm:font-semibold text-black px-1 sm:px-3 py-1 rounded-tr-2xl rounded-bl-2xl">
           New Arrivals Products🎈
         </h2>
@@ -38,11 +38,11 @@ const Recommended = () => {
       key={product.id}
       className="group overflow-hidden bg-white border border-gray-100 shadow hover:shadow-md transition duration-300 block "
     >
-      <img
+      <div className='w-full flex justify-center'><img
         src={product.unit_image || 'https://via.placeholder.com/200x300'}
         alt={product.product_name}
-        className="w-full p-3 h-42 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-      />
+        className=" p-3 h-40 w-40 bg-cover place-items-center bg-center transition-transform duration-500 group-hover:scale-105"
+      /></div>
 
       <div className="p-4 bg-white space-y-2">
         <h3 className="text-md font-semibold text-gray-800 truncate">{product.product_name}</h3>
@@ -78,7 +78,7 @@ const Recommended = () => {
           </div>
         )}
 
-         <span className="text-sm font-medium text-teal-600 block">&#x20B9; {product.price}</span></div>
+         <span className="text-sm font-medium text-green-500 block">&#x20B9; {product.price}</span></div>
         
       </div>
     </Link>

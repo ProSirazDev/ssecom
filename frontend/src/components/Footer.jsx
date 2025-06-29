@@ -10,9 +10,9 @@ const Footer = () => {
 
         {/* Company Info */}
         <div>
-          <h2 className="text-lg font-semibold mb-2 text-white">ShopEase</h2>
+          <h2 className="text-2xl font-bold mb-2 text-teal-500">DG Shop</h2>
           <p className="mb-4 text-gray-300">Your one-stop shop for everything awesome.</p>
-          <div className="flex space-x-4 text-indigo-500 text-lg">
+          <div className="flex space-x-4 text-white-500 text-lg">
             <FiFacebook className="hover:text-indigo-300 cursor-pointer" />
             <FiInstagram className="hover:text-indigo-300 cursor-pointer" />
             <FiTwitter className="hover:text-indigo-300 cursor-pointer" />
@@ -24,7 +24,7 @@ const Footer = () => {
           <h3 className="font-semibold mb-2 text-white">Quick Links</h3>
           <ul className="space-y-2">
             <li><Link to="/" className="hover:text-indigo-400">Home</Link></li>
-            <li><Link to="/shop" className="hover:text-indigo-400">Shop</Link></li>
+            <li><Link to="/products" className="hover:text-indigo-400">Products</Link></li>
             <li><Link to="/cart" className="hover:text-indigo-400">Cart</Link></li>
             <li><Link to="/contact" className="hover:text-indigo-400">Contact</Link></li>
           </ul>
